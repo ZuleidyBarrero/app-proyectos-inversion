@@ -20,3 +20,7 @@ Permitirá actualizar la información existente.
 - Gestión de barrios y veredas
 - Gestión de usuarios
 - Reportes
+## Pantalla añadida
+
+### 5. Detalle del proyecto
+Permitirá visualizar toda la información general, técnica y geográfica del proyecto.

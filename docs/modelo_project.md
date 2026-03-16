@@ -24,3 +24,21 @@ Representar la información básica de un proyecto de inversión pública dentro
 - Aprobado
 - Rechazado
 - Archivado
+## Modelos geográficos relacionados
+
+### Comuna
+Representa una división urbana del municipio.
+
+### Corregimiento
+Representa una división rural principal del municipio.
+
+### Barrio
+Representa una unidad territorial urbana y puede pertenecer a una comuna.
+
+### Vereda
+Representa una unidad territorial rural y puede pertenecer a un corregimiento.
+
+## Relaciones iniciales
+- Un barrio puede pertenecer a una comuna
+- Una vereda puede pertenecer a un corregimiento
+- Un proyecto puede asociarse a barrio o vereda según su ubicación

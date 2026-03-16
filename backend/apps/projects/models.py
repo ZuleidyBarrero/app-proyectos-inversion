@@ -1,9 +1,30 @@
-# Modelos de la app projects
+# Modelos conceptuales de la app projects
+
+class Comuna:
+    def __init__(self, nombre):
+        self.nombre = nombre
+
+
+class Corregimiento:
+    def __init__(self, nombre):
+        self.nombre = nombre
+
+
+class Barrio:
+    def __init__(self, nombre, comuna=None):
+        self.nombre = nombre
+        self.comuna = comuna
+
+
+class Vereda:
+    def __init__(self, nombre, corregimiento=None):
+        self.nombre = nombre
+        self.corregimiento = corregimiento
+
 
 class Project:
     """
     Modelo conceptual inicial del proyecto de inversión pública.
-    Este archivo todavía no usa Django real; por ahora define la estructura base.
     """
 
     def __init__(
