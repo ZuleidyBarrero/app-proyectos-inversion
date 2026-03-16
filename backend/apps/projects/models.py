@@ -2,6 +2,58 @@ from django.db import models
 from django.contrib.auth.models import User
 
 
+class Comuna(models.Model):
+    nombre = models.CharField(max_length=100, unique=True)
+
+    class Meta:
+        ordering = ["nombre"]
+        verbose_name = "Comuna"
+        verbose_name_plural = "Comunas"
+
+    def __str__(self):
+        return self.nombre
+
+
+class Corregimiento(models.Model):
+    nombre = models.CharField(max_length=100, unique=True)
+
+    class Meta:
+        ordering = ["nombre"]
+        verbose_name = "Corregimiento"
+        verbose_name_plural = "Corregimientos"
+
+    def __str__(self):
+        return self.nombre
+
+
+class Barrio(models.Model):
+    nombre = models.CharField(max_length=150)
+    comuna = models.ForeignKey(Comuna, on_delete=models.CASCADE, related_name="barrios")
+
+    class Meta:
+        ordering = ["nombre"]
+        verbose_name = "Barrio"
+        verbose_name_plural = "Barrios"
+        unique_together = ("nombre", "comuna")
+
+    def __str__(self):
+        return f"{self.nombre} - {self.comuna.nombre}"
+
+
+class Vereda(models.Model):
+    nombre = models.CharField(max_length=150)
+    corregimiento = models.ForeignKey(Corregimiento, on_delete=models.CASCADE, related_name="veredas")
+
+    class Meta:
+        ordering = ["nombre"]
+        verbose_name = "Vereda"
+        verbose_name_plural = "Veredas"
+        unique_together = ("nombre", "corregimiento")
+
+    def __str__(self):
+        return f"{self.nombre} - {self.corregimiento.nombre}"
+
+
 class Project(models.Model):
     ESTADOS = [
         ("Borrador", "Borrador"),
@@ -16,6 +68,12 @@ class Project(models.Model):
     problema = models.TextField()
     objetivo_general = models.TextField()
     poblacion_objetivo = models.CharField(max_length=255)
+
+    comuna = models.ForeignKey(Comuna, on_delete=models.SET_NULL, null=True, blank=True)
+    barrio = models.ForeignKey(Barrio, on_delete=models.SET_NULL, null=True, blank=True)
+    corregimiento = models.ForeignKey(Corregimiento, on_delete=models.SET_NULL, null=True, blank=True)
+    vereda = models.ForeignKey(Vereda, on_delete=models.SET_NULL, null=True, blank=True)
+
     presupuesto = models.DecimalField(max_digits=18, decimal_places=2, default=0)
     estado = models.CharField(max_length=20, choices=ESTADOS, default="Borrador")
     observaciones = models.TextField(blank=True)

@@ -1,5 +1,29 @@
 from django.contrib import admin
-from .models import Project
+from .models import Barrio, Comuna, Corregimiento, Project, Vereda
+
+
+@admin.register(Comuna)
+class ComunaAdmin(admin.ModelAdmin):
+    search_fields = ("nombre",)
+
+
+@admin.register(Corregimiento)
+class CorregimientoAdmin(admin.ModelAdmin):
+    search_fields = ("nombre",)
+
+
+@admin.register(Barrio)
+class BarrioAdmin(admin.ModelAdmin):
+    list_display = ("nombre", "comuna")
+    search_fields = ("nombre",)
+    list_filter = ("comuna",)
+
+
+@admin.register(Vereda)
+class VeredaAdmin(admin.ModelAdmin):
+    list_display = ("nombre", "corregimiento")
+    search_fields = ("nombre",)
+    list_filter = ("corregimiento",)
 
 
 @admin.register(Project)
