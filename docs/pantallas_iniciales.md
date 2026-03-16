@@ -39,3 +39,7 @@ Permitirá ingresar al sistema mediante usuario y contraseña.
 
 ### 7. Listado de usuarios
 Permitirá visualizar los usuarios registrados y sus roles.
+## Pantalla principal
+
+### Home
+Página de entrada al sistema con acceso a módulos principales.

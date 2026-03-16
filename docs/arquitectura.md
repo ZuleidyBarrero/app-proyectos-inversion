@@ -27,3 +27,12 @@ users
 
 ## Propósito de la app users
 Gestionar autenticación, usuarios y roles del sistema.
+## Módulo core
+
+Responsable de la navegación general del sistema.
+
+Incluye:
+
+- home
+- rutas principales
+- conexión entre apps
