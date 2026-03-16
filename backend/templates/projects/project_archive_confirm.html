@@ -1,0 +1,22 @@
+{% extends "base/base.html" %}
+
+{% block title %}Archivar proyecto{% endblock %}
+
+{% block content %}
+    <h1>Archivar proyecto</h1>
+
+    <div class="card">
+        <p><strong>Proyecto:</strong> {{ project.nombre }}</p>
+        <p><strong>Estado actual:</strong> {{ project.estado }}</p>
+        <p>
+            Esta acción cambiará el estado del proyecto a <strong>Archivado</strong>.
+            El registro no será eliminado.
+        </p>
+    </div>
+
+    <form method="post">
+        {% csrf_token %}
+        <button type="submit">Confirmar archivado</button>
+        <a class="btn-link" href="/projects/{{ project.id }}/">Cancelar</a>
+    </form>
+{% endblock %}

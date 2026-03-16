@@ -1,3 +1,4 @@
+from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.db.models import Q
 from django.shortcuts import get_object_or_404, redirect, render
@@ -63,6 +64,7 @@ def project_create(request):
             project = form.save(commit=False)
             project.creado_por = request.user
             project.save()
+            messages.success(request, "Proyecto creado correctamente.")
             return redirect("project_detail", project_id=project.id)
     else:
         form = ProjectForm()
@@ -91,6 +93,7 @@ def project_update(request, project_id):
         form = ProjectForm(request.POST, instance=project)
         if form.is_valid():
             form.save()
+            messages.success(request, "Proyecto actualizado correctamente.")
             return redirect("project_detail", project_id=project.id)
     else:
         form = ProjectForm(instance=project)
@@ -109,5 +112,19 @@ def project_attachment_create(request, project_id):
             attachment.project = project
             attachment.cargado_por = request.user
             attachment.save()
+            messages.success(request, "Anexo cargado correctamente.")
 
     return redirect("project_detail", project_id=project.id)
+
+
+@login_required
+def project_archive(request, project_id):
+    project = get_object_or_404(Project, id=project_id)
+
+    if request.method == "POST":
+        project.estado = "Archivado"
+        project.save()
+        messages.success(request, "Proyecto archivado correctamente.")
+        return redirect("project_detail", project_id=project.id)
+
+    return render(request, "projects/project_archive_confirm.html", {"project": project})
