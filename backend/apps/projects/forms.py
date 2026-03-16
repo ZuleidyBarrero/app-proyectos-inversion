@@ -29,9 +29,10 @@ class ProjectForm(forms.ModelForm):
         super().__init__(*args, **kwargs)
 
         self.fields["comuna"].queryset = Comuna.objects.all().order_by("nombre")
-        self.fields["barrio"].queryset = Barrio.objects.select_related("comuna").all().order_by("nombre")
         self.fields["corregimiento"].queryset = Corregimiento.objects.all().order_by("nombre")
-        self.fields["vereda"].queryset = Vereda.objects.select_related("corregimiento").all().order_by("nombre")
+
+        self.fields["barrio"].queryset = Barrio.objects.none()
+        self.fields["vereda"].queryset = Vereda.objects.none()
 
         self.fields["comuna"].required = False
         self.fields["barrio"].required = False
@@ -42,6 +43,25 @@ class ProjectForm(forms.ModelForm):
         self.fields["barrio"].empty_label = "Seleccione un barrio"
         self.fields["corregimiento"].empty_label = "Seleccione un corregimiento"
         self.fields["vereda"].empty_label = "Seleccione una vereda"
+
+        # Si viene POST, filtra barrios/veredas según lo seleccionado
+        if "comuna" in self.data:
+            try:
+                comuna_id = int(self.data.get("comuna"))
+                self.fields["barrio"].queryset = Barrio.objects.filter(comuna_id=comuna_id).order_by("nombre")
+            except (ValueError, TypeError):
+                pass
+        elif self.instance.pk and self.instance.comuna:
+            self.fields["barrio"].queryset = Barrio.objects.filter(comuna=self.instance.comuna).order_by("nombre")
+
+        if "corregimiento" in self.data:
+            try:
+                corregimiento_id = int(self.data.get("corregimiento"))
+                self.fields["vereda"].queryset = Vereda.objects.filter(corregimiento_id=corregimiento_id).order_by("nombre")
+            except (ValueError, TypeError):
+                pass
+        elif self.instance.pk and self.instance.corregimiento:
+            self.fields["vereda"].queryset = Vereda.objects.filter(corregimiento=self.instance.corregimiento).order_by("nombre")
 
     def clean(self):
         cleaned_data = super().clean()
