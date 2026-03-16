@@ -2,105 +2,17 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Nuevo proyecto</title>
+    <title>Formulario de proyecto</title>
 </head>
 <body>
     <h1>Formulario de proyecto</h1>
 
-    <form>
-        <h2>Información general</h2>
-
-        <div>
-            <label for="nombre">Nombre del proyecto</label><br>
-            <input type="text" id="nombre" name="nombre">
-        </div>
-        <br>
-
-        <div>
-            <label for="sector">Sector</label><br>
-            <input type="text" id="sector" name="sector">
-        </div>
-        <br>
-
-        <div>
-            <label for="problema">Problema</label><br>
-            <textarea id="problema" name="problema"></textarea>
-        </div>
-        <br>
-
-        <div>
-            <label for="objetivo_general">Objetivo general</label><br>
-            <textarea id="objetivo_general" name="objetivo_general"></textarea>
-        </div>
-        <br>
-
-        <div>
-            <label for="poblacion_objetivo">Población objetivo</label><br>
-            <input type="text" id="poblacion_objetivo" name="poblacion_objetivo">
-        </div>
-        <br>
-
-        <div>
-            <label for="presupuesto">Presupuesto</label><br>
-            <input type="number" id="presupuesto" name="presupuesto">
-        </div>
-        <br>
-
-        <div>
-            <label for="estado">Estado</label><br>
-            <select id="estado" name="estado">
-                <option>Borrador</option>
-                <option>En revisión</option>
-                <option>Aprobado</option>
-                <option>Rechazado</option>
-                <option>Archivado</option>
-            </select>
-        </div>
-        <br>
-
-        <h2>Ubicación</h2>
-
-        <div>
-            <label for="comuna">Comuna</label><br>
-            <input type="text" id="comuna" name="comuna">
-        </div>
-        <br>
-
-        <div>
-            <label for="barrio">Barrio</label><br>
-            <input type="text" id="barrio" name="barrio">
-        </div>
-        <br>
-
-        <div>
-            <label for="corregimiento">Corregimiento</label><br>
-            <input type="text" id="corregimiento" name="corregimiento">
-        </div>
-        <br>
-
-        <div>
-            <label for="vereda">Vereda</label><br>
-            <input type="text" id="vereda" name="vereda">
-        </div>
-        <br>
-
-        <h2>Observaciones</h2>
-
-        <div>
-            <label for="observaciones">Observaciones</label><br>
-            <textarea id="observaciones" name="observaciones"></textarea>
-        </div>
-        <br>
-
-        <h2>Anexos</h2>
-
-        <div>
-            <label for="anexos">Cargar archivo</label><br>
-            <input type="file" id="anexos" name="anexos">
-        </div>
-        <br>
-
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
         <button type="submit">Guardar proyecto</button>
     </form>
+
+    <p><a href="/projects/">Volver al listado</a></p>
 </body>
 </html>
