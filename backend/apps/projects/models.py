@@ -40,7 +40,8 @@ class Project:
         corregimiento=None,
         presupuesto=0,
         estado="Borrador",
-        observaciones=""
+        observaciones="",
+        creado_por=None
     ):
         self.nombre = nombre
         self.sector = sector
@@ -54,3 +55,4 @@ class Project:
         self.presupuesto = presupuesto
         self.estado = estado
         self.observaciones = observaciones
+        self.creado_por = creado_por

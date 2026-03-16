@@ -1,0 +1,1 @@
+Aplicación conceptual para usuarios, autenticación y roles del sistema

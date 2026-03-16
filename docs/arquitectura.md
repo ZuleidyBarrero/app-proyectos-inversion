@@ -22,3 +22,8 @@ projects
 - Listar proyectos
 - Cargar anexos
 - Gestión de catálogos geográficos
+## Nueva app conceptual
+users
+
+## Propósito de la app users
+Gestionar autenticación, usuarios y roles del sistema.

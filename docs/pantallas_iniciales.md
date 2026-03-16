@@ -32,3 +32,10 @@ La pantalla de creación y edición del proyecto ya contempla:
 - estado del proyecto
 - observaciones
 - carga inicial de anexos
+## Pantallas de usuarios
+
+### 6. Inicio de sesión
+Permitirá ingresar al sistema mediante usuario y contraseña.
+
+### 7. Listado de usuarios
+Permitirá visualizar los usuarios registrados y sus roles.
