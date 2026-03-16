@@ -75,12 +75,15 @@ def project_create(request):
 def project_detail(request, project_id):
     project = get_object_or_404(Project, id=project_id)
     attachment_form = ProjectAttachmentForm()
+    estados_disponibles = [estado for estado, _ in Project.ESTADOS if estado != project.estado]
+
     return render(
         request,
         "projects/project_detail.html",
         {
             "project": project,
             "attachment_form": attachment_form,
+            "estados_disponibles": estados_disponibles,
         },
     )
 
@@ -128,3 +131,21 @@ def project_archive(request, project_id):
         return redirect("project_detail", project_id=project.id)
 
     return render(request, "projects/project_archive_confirm.html", {"project": project})
+
+
+@login_required
+def project_change_status(request, project_id):
+    project = get_object_or_404(Project, id=project_id)
+
+    if request.method == "POST":
+        nuevo_estado = request.POST.get("estado", "").strip()
+        estados_validos = [estado for estado, _ in Project.ESTADOS]
+
+        if nuevo_estado in estados_validos:
+            project.estado = nuevo_estado
+            project.save()
+            messages.success(request, f"Estado actualizado a: {nuevo_estado}.")
+        else:
+            messages.error(request, "El estado seleccionado no es válido.")
+
+    return redirect("project_detail", project_id=project.id)

@@ -39,6 +39,22 @@
     </fieldset>
 
     <fieldset>
+        <legend>Cambio de estado</legend>
+        <form method="post" action="/projects/{{ project.id }}/change-status/">
+            {% csrf_token %}
+            <p>
+                <label for="estado">Nuevo estado</label><br>
+                <select name="estado" id="estado">
+                    {% for estado in estados_disponibles %}
+                        <option value="{{ estado }}">{{ estado }}</option>
+                    {% endfor %}
+                </select>
+            </p>
+            <button type="submit">Actualizar estado</button>
+        </form>
+    </fieldset>
+
+    <fieldset>
         <legend>Anexos</legend>
         {% if project.attachments.all %}
             <ul>

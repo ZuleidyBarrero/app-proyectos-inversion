@@ -45,3 +45,7 @@
 - Anexos reales
 - Login funcional
 - Filtros iniciales de consulta en listado de proyectos
+## Nuevo avance funcional
+- archivado lógico de proyectos
+- cambio de estado desde el detalle del proyecto
+- mensajes de éxito para acciones principales
