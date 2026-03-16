@@ -1,58 +1,32 @@
-# Modelos conceptuales de la app projects
-
-class Comuna:
-    def __init__(self, nombre):
-        self.nombre = nombre
+from django.db import models
+from django.contrib.auth.models import User
 
 
-class Corregimiento:
-    def __init__(self, nombre):
-        self.nombre = nombre
+class Project(models.Model):
+    ESTADOS = [
+        ("Borrador", "Borrador"),
+        ("En revisión", "En revisión"),
+        ("Aprobado", "Aprobado"),
+        ("Rechazado", "Rechazado"),
+        ("Archivado", "Archivado"),
+    ]
 
+    nombre = models.CharField(max_length=255)
+    sector = models.CharField(max_length=150)
+    problema = models.TextField()
+    objetivo_general = models.TextField()
+    poblacion_objetivo = models.CharField(max_length=255)
+    presupuesto = models.DecimalField(max_digits=18, decimal_places=2, default=0)
+    estado = models.CharField(max_length=20, choices=ESTADOS, default="Borrador")
+    observaciones = models.TextField(blank=True)
+    creado_por = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)
+    creado_en = models.DateTimeField(auto_now_add=True)
+    actualizado_en = models.DateTimeField(auto_now=True)
 
-class Barrio:
-    def __init__(self, nombre, comuna=None):
-        self.nombre = nombre
-        self.comuna = comuna
+    class Meta:
+        ordering = ["-creado_en"]
+        verbose_name = "Proyecto"
+        verbose_name_plural = "Proyectos"
 
-
-class Vereda:
-    def __init__(self, nombre, corregimiento=None):
-        self.nombre = nombre
-        self.corregimiento = corregimiento
-
-
-class Project:
-    """
-    Modelo conceptual inicial del proyecto de inversión pública.
-    """
-
-    def __init__(
-        self,
-        nombre,
-        sector,
-        problema,
-        objetivo_general,
-        poblacion_objetivo,
-        barrio=None,
-        vereda=None,
-        comuna=None,
-        corregimiento=None,
-        presupuesto=0,
-        estado="Borrador",
-        observaciones="",
-        creado_por=None
-    ):
-        self.nombre = nombre
-        self.sector = sector
-        self.problema = problema
-        self.objetivo_general = objetivo_general
-        self.poblacion_objetivo = poblacion_objetivo
-        self.barrio = barrio
-        self.vereda = vereda
-        self.comuna = comuna
-        self.corregimiento = corregimiento
-        self.presupuesto = presupuesto
-        self.estado = estado
-        self.observaciones = observaciones
-        self.creado_por = creado_por
+    def __str__(self):
+        return self.nombre
