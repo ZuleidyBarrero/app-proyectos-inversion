@@ -1,28 +1,17 @@
-# Vistas de la app projects
-
-def project_list():
-    return {
-        "template": "projects/project_list.html",
-        "message": "Listado de proyectos"
-    }
+from django.shortcuts import render
 
 
-def project_create():
-    return {
-        "template": "projects/project_form.html",
-        "message": "Formulario para crear proyecto"
-    }
+def project_list(request):
+    return render(request, "projects/project_list.html")
 
 
-def project_detail(project_id):
-    return {
-        "template": "projects/project_detail.html",
-        "message": f"Detalle del proyecto {project_id}"
-    }
+def project_create(request):
+    return render(request, "projects/project_form.html")
 
 
-def project_update(project_id):
-    return {
-        "template": "projects/project_form.html",
-        "message": f"Formulario para editar el proyecto {project_id}"
-    }
+def project_detail(request, project_id):
+    return render(request, "projects/project_detail.html", {"project_id": project_id})
+
+
+def project_update(request, project_id):
+    return render(request, "projects/project_form.html", {"project_id": project_id})

@@ -1,14 +1,9 @@
-# Vistas conceptuales de la app users
-
-def login_view():
-    return {
-        "template": "users/login.html",
-        "message": "Formulario de inicio de sesión"
-    }
+from django.shortcuts import render
 
 
-def user_list():
-    return {
-        "template": "users/user_list.html",
-        "message": "Listado de usuarios"
-    }
+def login_view(request):
+    return render(request, "users/login.html")
+
+
+def user_list(request):
+    return render(request, "users/user_list.html")

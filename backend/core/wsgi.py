@@ -1,3 +1,7 @@
-# Archivo conceptual WSGI para despliegue del proyecto
+import os
 
-application = "Configuración WSGI pendiente de activar en entorno real"
+from django.core.wsgi import get_wsgi_application
+
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "core.settings")
+
+application = get_wsgi_application()

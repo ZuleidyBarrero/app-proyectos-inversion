@@ -1,15 +1,23 @@
-# Configuración inicial tipo Django para el sistema
+from pathlib import Path
 
-BASE_DIR = "backend"
+BASE_DIR = Path(__file__).resolve().parent.parent
 
-SECRET_KEY = "cambiar-por-una-clave-segura-en-produccion"
+SECRET_KEY = "cambia-esta-clave-en-produccion"
 
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    "localhost",
+    "127.0.0.1",
+]
 
 INSTALLED_APPS = [
-    "core",
+    "django.contrib.admin",
+    "django.contrib.auth",
+    "django.contrib.contenttypes",
+    "django.contrib.sessions",
+    "django.contrib.messages",
+    "django.contrib.staticfiles",
     "apps.projects",
     "apps.users",
 ]
@@ -21,23 +29,45 @@ MIDDLEWARE = [
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
+    "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
 
 ROOT_URLCONF = "core.urls"
 
-TEMPLATES_DIR = "backend/templates"
-STATIC_URL = "/static/"
-MEDIA_URL = "/media/"
-MEDIA_ROOT = "backend/media"
-STATICFILES_DIRS = ["backend/static"]
+TEMPLATES = [
+    {
+        "BACKEND": "django.template.backends.django.DjangoTemplates",
+        "DIRS": [BASE_DIR / "templates"],
+        "APP_DIRS": True,
+        "OPTIONS": {
+            "context_processors": [
+                "django.template.context_processors.request",
+                "django.contrib.auth.context_processors.auth",
+                "django.contrib.messages.context_processors.messages",
+            ],
+        },
+    },
+]
+
+WSGI_APPLICATION = "core.wsgi.application"
+ASGI_APPLICATION = "core.asgi.application"
 
 DATABASES = {
     "default": {
-        "ENGINE": "django.db.backends.postgresql",
-        "NAME": "proyectos_db",
-        "USER": "postgres",
-        "PASSWORD": "cambiar_password",
-        "HOST": "localhost",
-        "PORT": "5432",
+        "ENGINE": "django.db.backends.sqlite3",
+        "NAME": BASE_DIR / "db.sqlite3",
     }
 }
+
+LANGUAGE_CODE = "es-co"
+TIME_ZONE = "America/Bogota"
+USE_I18N = True
+USE_TZ = True
+
+STATIC_URL = "/static/"
+STATICFILES_DIRS = [BASE_DIR / "static"]
+
+MEDIA_URL = "/media/"
+MEDIA_ROOT = BASE_DIR / "media"
+
+DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"

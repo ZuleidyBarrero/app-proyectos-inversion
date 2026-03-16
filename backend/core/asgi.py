@@ -1,3 +1,7 @@
-# Archivo conceptual ASGI para despliegue del proyecto
+import os
 
-application = "Configuración ASGI pendiente de activar en entorno real"
+from django.core.asgi import get_asgi_application
+
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "core.settings")
+
+application = get_asgi_application()

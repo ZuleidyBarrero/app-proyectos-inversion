@@ -1,5 +1,6 @@
-# Configuración conceptual de la app projects
+from django.apps import AppConfig
 
-class ProjectsConfig:
+
+class ProjectsConfig(AppConfig):
     default_auto_field = "django.db.models.BigAutoField"
     name = "apps.projects"

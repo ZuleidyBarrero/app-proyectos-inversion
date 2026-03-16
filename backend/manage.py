@@ -1,7 +1,17 @@
-# Archivo principal conceptual del proyecto Django
+#!/usr/bin/env python
+import os
+import sys
+
 
 def main():
-    print("manage.py conceptual del sistema de proyectos")
+    os.environ.setdefault("DJANGO_SETTINGS_MODULE", "core.settings")
+    try:
+        from django.core.management import execute_from_command_line
+    except ImportError as exc:
+        raise ImportError(
+            "No se pudo importar Django. Verifica que esté instalado y que el virtualenv esté activo."
+        ) from exc
+    execute_from_command_line(sys.argv)
 
 
 if __name__ == "__main__":

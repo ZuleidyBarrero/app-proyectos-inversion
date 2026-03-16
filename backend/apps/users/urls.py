@@ -1,6 +1,7 @@
-# Rutas conceptuales de la app users
+from django.urls import path
+from . import views
 
-routes = {
-    "login/": "login_view",
-    "users/": "user_list",
-}
+urlpatterns = [
+    path("login/", views.login_view, name="login"),
+    path("", views.user_list, name="user_list"),
+]
