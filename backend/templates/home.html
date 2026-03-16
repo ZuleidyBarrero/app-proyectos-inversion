@@ -3,24 +3,56 @@
 {% block title %}Inicio{% endblock %}
 
 {% block content %}
-    <h1>Bienvenido al sistema</h1>
+    <h1>Dashboard inicial del sistema</h1>
 
     <p>
-        Este aplicativo permite gestionar proyectos de inversión pública,
-        su información principal, ubicación, anexos y trazabilidad básica.
+        Vista general de proyectos registrados en el aplicativo.
     </p>
 
-    <h2>Módulos principales</h2>
+    <h2>Resumen general</h2>
 
     <div class="card">
-        <h3>Gestión de proyectos</h3>
-        <p>Consulta, crea, edita y revisa proyectos registrados en el sistema.</p>
-        <a class="btn-link" href="/projects/">Ir al módulo</a>
+        <p><strong>Total de proyectos:</strong> {{ total_proyectos }}</p>
     </div>
 
+    <h2>Proyectos por estado</h2>
+
     <div class="card">
-        <h3>Gestión de usuarios</h3>
-        <p>Consulta usuarios y accede al sistema mediante autenticación.</p>
-        <a class="btn-link" href="/users/">Ir al módulo</a>
+        <p><strong>Borrador:</strong> {{ proyectos_borrador }}</p>
+        <p><strong>En revisión:</strong> {{ proyectos_revision }}</p>
+        <p><strong>Aprobados:</strong> {{ proyectos_aprobados }}</p>
+        <p><strong>Rechazados:</strong> {{ proyectos_rechazados }}</p>
+        <p><strong>Archivados:</strong> {{ proyectos_archivados }}</p>
+    </div>
+
+    <h2>Clasificación territorial</h2>
+
+    <div class="card">
+        <p><strong>Urbanos:</strong> {{ proyectos_urbanos }}</p>
+        <p><strong>Rurales:</strong> {{ proyectos_rurales }}</p>
+    </div>
+
+    <h2>Sectores con más proyectos</h2>
+
+    <div class="card">
+        {% if sectores %}
+            <ul>
+                {% for item in sectores %}
+                    <li>
+                        <strong>{{ item.sector }}</strong>: {{ item.total }}
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>No hay sectores registrados todavía.</p>
+        {% endif %}
+    </div>
+
+    <h2>Accesos rápidos</h2>
+
+    <div class="card">
+        <p><a class="btn-link" href="/projects/">Ir al listado de proyectos</a></p>
+        <p><a class="btn-link" href="/projects/new/">Crear nuevo proyecto</a></p>
+        <p><a class="btn-link" href="/admin/">Ir al panel admin</a></p>
     </div>
 {% endblock %}

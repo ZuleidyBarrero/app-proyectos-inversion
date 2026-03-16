@@ -49,3 +49,6 @@
 - archivado lógico de proyectos
 - cambio de estado desde el detalle del proyecto
 - mensajes de éxito para acciones principales
+## Nuevo avance funcional
+- historial de cambios de estado
+- dashboard inicial con indicadores básicos
