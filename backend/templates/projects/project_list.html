@@ -9,17 +9,74 @@
 
     <p><a href="/projects/new/">Crear nuevo proyecto</a></p>
 
+    <h2>Filtros</h2>
+    <form method="get">
+        <p>
+            <label for="q">Buscar</label><br>
+            <input type="text" id="q" name="q" value="{{ q }}">
+        </p>
+
+        <p>
+            <label for="estado">Estado</label><br>
+            <select id="estado" name="estado">
+                <option value="">Todos</option>
+                {% for value, label in estados %}
+                    <option value="{{ value }}" {% if estado == value %}selected{% endif %}>{{ label }}</option>
+                {% endfor %}
+            </select>
+        </p>
+
+        <p>
+            <label for="sector">Sector</label><br>
+            <input type="text" id="sector" name="sector" value="{{ sector }}">
+        </p>
+
+        <p>
+            <label for="comuna">Comuna</label><br>
+            <select id="comuna" name="comuna">
+                <option value="">Todas</option>
+                {% for comuna in comunas %}
+                    <option value="{{ comuna.id }}" {% if comuna_id == comuna.id|stringformat:"s" %}selected{% endif %}>
+                        {{ comuna.nombre }}
+                    </option>
+                {% endfor %}
+            </select>
+        </p>
+
+        <p>
+            <label for="corregimiento">Corregimiento</label><br>
+            <select id="corregimiento" name="corregimiento">
+                <option value="">Todos</option>
+                {% for corregimiento in corregimientos %}
+                    <option value="{{ corregimiento.id }}" {% if corregimiento_id == corregimiento.id|stringformat:"s" %}selected{% endif %}>
+                        {{ corregimiento.nombre }}
+                    </option>
+                {% endfor %}
+            </select>
+        </p>
+
+        <button type="submit">Filtrar</button>
+        <a href="/projects/">Limpiar filtros</a>
+    </form>
+
+    <hr>
+
     {% if projects %}
         <ul>
             {% for project in projects %}
                 <li>
-                    <a href="/projects/{{ project.id }}/">{{ project.nombre }}</a>
-                    - {{ project.sector }} - {{ project.estado }}
+                    <a href="/projects/{{ project.id }}/">{{ project.nombre }}</a><br>
+                    <strong>Sector:</strong> {{ project.sector }}<br>
+                    <strong>Estado:</strong> {{ project.estado }}<br>
+                    <strong>Comuna:</strong> {{ project.comuna|default:"-" }}<br>
+                    <strong>Corregimiento:</strong> {{ project.corregimiento|default:"-" }}<br>
+                    <strong>Creado por:</strong> {{ project.creado_por|default:"-" }}
                 </li>
+                <br>
             {% endfor %}
         </ul>
     {% else %}
-        <p>No hay proyectos registrados.</p>
+        <p>No hay proyectos registrados con esos criterios.</p>
     {% endif %}
 </body>
 </html>

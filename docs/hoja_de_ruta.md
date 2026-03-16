@@ -39,3 +39,9 @@
 - Dominio o subdominio
 - Usuarios institucionales
 - Ambiente productivo
+## Avance funcional alcanzado
+- Proyectos reales guardados en base de datos
+- Geografía real asociada a proyectos
+- Anexos reales
+- Login funcional
+- Filtros iniciales de consulta en listado de proyectos
