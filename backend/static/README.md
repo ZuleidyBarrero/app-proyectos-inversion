@@ -1,0 +1,1 @@
+Aquí irán archivos visuales, como CSS, JavaScript e imágenes del sistema.

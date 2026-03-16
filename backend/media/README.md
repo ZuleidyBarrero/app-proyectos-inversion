@@ -1,0 +1,1 @@
+Aquí irán los archivos que suban los usuarios, como PDF, Excel, imágenes y anexos.

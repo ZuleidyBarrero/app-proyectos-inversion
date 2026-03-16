@@ -1,0 +1,1 @@
+Aquí irá la configuración principal del sistema.
