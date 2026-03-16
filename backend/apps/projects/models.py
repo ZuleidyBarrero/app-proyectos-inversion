@@ -88,4 +88,19 @@ class Project(models.Model):
 
     def __str__(self):
         return self.nombre
-        “Ya hice el commit de validaciones de ubicación”
+
+
+class ProjectAttachment(models.Model):
+    project = models.ForeignKey(Project, on_delete=models.CASCADE, related_name="attachments")
+    archivo = models.FileField(upload_to="projects/attachments/")
+    descripcion = models.CharField(max_length=255, blank=True)
+    cargado_por = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)
+    cargado_en = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        ordering = ["-cargado_en"]
+        verbose_name = "Anexo de proyecto"
+        verbose_name_plural = "Anexos de proyecto"
+
+    def __str__(self):
+        return self.descripcion or self.archivo.name
