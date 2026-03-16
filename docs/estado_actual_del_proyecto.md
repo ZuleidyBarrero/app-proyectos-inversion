@@ -20,3 +20,8 @@ El proyecto ya tiene una estructura organizada y cercana a Django real, pero aú
 - creación real del proyecto Django
 - migraciones de base de datos
 - conexión real entre vistas, URLs y templates
+## Decisión de arquitectura
+La estructura oficial del proyecto será la de tipo Django ubicada en backend/core y backend/apps.
+
+## Siguiente transición esperada
+Migrar el repositorio a un entorno con terminal para convertir la estructura conceptual en una aplicación ejecutable.
