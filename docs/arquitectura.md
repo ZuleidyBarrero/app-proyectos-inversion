@@ -36,3 +36,18 @@ Incluye:
 - home
 - rutas principales
 - conexión entre apps
+## Estructura tipo Django preparada
+
+Se crean los siguientes componentes base:
+
+- backend/manage.py
+- backend/core/settings.py
+- backend/core/wsgi.py
+- backend/core/asgi.py
+
+Además, cada app empieza a adoptar estructura similar a Django:
+
+- apps.py
+- admin.py
+- tests.py
+- urls_real.py
