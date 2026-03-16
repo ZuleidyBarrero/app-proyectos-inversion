@@ -28,6 +28,16 @@ class VeredaAdmin(admin.ModelAdmin):
 
 @admin.register(Project)
 class ProjectAdmin(admin.ModelAdmin):
-    list_display = ("nombre", "sector", "estado", "creado_por", "creado_en")
+    list_display = (
+        "nombre",
+        "sector",
+        "estado",
+        "comuna",
+        "barrio",
+        "corregimiento",
+        "vereda",
+        "creado_por",
+        "creado_en",
+    )
     search_fields = ("nombre", "sector", "poblacion_objetivo")
-    list_filter = ("estado", "sector", "creado_en")
+    list_filter = ("estado", "sector", "comuna", "corregimiento", "creado_en")

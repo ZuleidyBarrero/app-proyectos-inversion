@@ -7,6 +7,7 @@
 <body>
     <h1>Detalle del proyecto</h1>
 
+    <h2>Información general</h2>
     <ul>
         <li><strong>Nombre:</strong> {{ project.nombre }}</li>
         <li><strong>Sector:</strong> {{ project.sector }}</li>
@@ -16,15 +17,24 @@
         <li><strong>Presupuesto:</strong> {{ project.presupuesto }}</li>
         <li><strong>Estado:</strong> {{ project.estado }}</li>
         <li><strong>Observaciones:</strong> {{ project.observaciones }}</li>
-        <li><strong>Creado por:</strong> {{ project.creado_por }}</li>
-        <li><strong>Fecha de creación:</strong> {{ project.creado_en }}</li>
     </ul>
 
-    <p>
-        <a href="/projects/{{ project.id }}/edit/">Editar proyecto</a>
-    </p>
-    <p>
-        <a href="/projects/">Volver al listado</a>
-    </p>
+    <h2>Ubicación</h2>
+    <ul>
+        <li><strong>Comuna:</strong> {{ project.comuna }}</li>
+        <li><strong>Barrio:</strong> {{ project.barrio }}</li>
+        <li><strong>Corregimiento:</strong> {{ project.corregimiento }}</li>
+        <li><strong>Vereda:</strong> {{ project.vereda }}</li>
+    </ul>
+
+    <h2>Trazabilidad</h2>
+    <ul>
+        <li><strong>Creado por:</strong> {{ project.creado_por }}</li>
+        <li><strong>Fecha de creación:</strong> {{ project.creado_en }}</li>
+        <li><strong>Última actualización:</strong> {{ project.actualizado_en }}</li>
+    </ul>
+
+    <p><a href="/projects/{{ project.id }}/edit/">Editar proyecto</a></p>
+    <p><a href="/projects/">Volver al listado</a></p>
 </body>
 </html>

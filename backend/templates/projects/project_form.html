@@ -9,7 +9,58 @@
 
     <form method="post">
         {% csrf_token %}
-        {{ form.as_p }}
+
+        <fieldset>
+            <legend>Información general</legend>
+            {{ form.nombre.label_tag }}<br>
+            {{ form.nombre }}<br><br>
+
+            {{ form.sector.label_tag }}<br>
+            {{ form.sector }}<br><br>
+
+            {{ form.problema.label_tag }}<br>
+            {{ form.problema }}<br><br>
+
+            {{ form.objetivo_general.label_tag }}<br>
+            {{ form.objetivo_general }}<br><br>
+
+            {{ form.poblacion_objetivo.label_tag }}<br>
+            {{ form.poblacion_objetivo }}<br><br>
+
+            {{ form.presupuesto.label_tag }}<br>
+            {{ form.presupuesto }}<br><br>
+
+            {{ form.estado.label_tag }}<br>
+            {{ form.estado }}<br><br>
+
+            {{ form.observaciones.label_tag }}<br>
+            {{ form.observaciones }}<br><br>
+        </fieldset>
+
+        <br>
+
+        <fieldset>
+            <legend>Ubicación urbana</legend>
+            {{ form.comuna.label_tag }}<br>
+            {{ form.comuna }}<br><br>
+
+            {{ form.barrio.label_tag }}<br>
+            {{ form.barrio }}<br><br>
+        </fieldset>
+
+        <br>
+
+        <fieldset>
+            <legend>Ubicación rural</legend>
+            {{ form.corregimiento.label_tag }}<br>
+            {{ form.corregimiento }}<br><br>
+
+            {{ form.vereda.label_tag }}<br>
+            {{ form.vereda }}<br><br>
+        </fieldset>
+
+        <br>
+
         <button type="submit">Guardar proyecto</button>
     </form>
 
