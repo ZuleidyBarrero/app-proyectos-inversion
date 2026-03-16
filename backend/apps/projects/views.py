@@ -1,17 +1,28 @@
 # Vistas de la app projects
-# Vistas de la app projects
 
 def project_list():
-    return "Aquí se mostrará el listado de proyectos"
+    return {
+        "template": "projects/project_list.html",
+        "message": "Listado de proyectos"
+    }
 
 
 def project_create():
-    return "Aquí se mostrará el formulario para crear proyectos"
+    return {
+        "template": "projects/project_form.html",
+        "message": "Formulario para crear proyecto"
+    }
 
 
-def project_detail():
-    return "Aquí se mostrará el detalle de un proyecto"
+def project_detail(project_id):
+    return {
+        "template": "projects/project_detail.html",
+        "message": f"Detalle del proyecto {project_id}"
+    }
 
 
-def project_update():
-    return "Aquí se mostrará el formulario para editar un proyecto"
+def project_update(project_id):
+    return {
+        "template": "projects/project_form.html",
+        "message": f"Formulario para editar el proyecto {project_id}"
+    }
