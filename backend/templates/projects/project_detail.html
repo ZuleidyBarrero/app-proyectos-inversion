@@ -1,61 +1,70 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <title>Detalle del proyecto</title>
-</head>
-<body>
+{% extends "base/base.html" %}
+
+{% block title %}Detalle del proyecto{% endblock %}
+
+{% block content %}
     <h1>Detalle del proyecto</h1>
 
-    <h2>Información general</h2>
-    <ul>
-        <li><strong>Nombre:</strong> {{ project.nombre }}</li>
-        <li><strong>Sector:</strong> {{ project.sector }}</li>
-        <li><strong>Problema:</strong> {{ project.problema }}</li>
-        <li><strong>Objetivo general:</strong> {{ project.objetivo_general }}</li>
-        <li><strong>Población objetivo:</strong> {{ project.poblacion_objetivo }}</li>
-        <li><strong>Presupuesto:</strong> {{ project.presupuesto }}</li>
-        <li><strong>Estado:</strong> {{ project.estado }}</li>
-        <li><strong>Observaciones:</strong> {{ project.observaciones }}</li>
-    </ul>
-
-    <h2>Ubicación</h2>
-    <ul>
-        <li><strong>Comuna:</strong> {{ project.comuna }}</li>
-        <li><strong>Barrio:</strong> {{ project.barrio }}</li>
-        <li><strong>Corregimiento:</strong> {{ project.corregimiento }}</li>
-        <li><strong>Vereda:</strong> {{ project.vereda }}</li>
-    </ul>
-
-    <h2>Trazabilidad</h2>
-    <ul>
-        <li><strong>Creado por:</strong> {{ project.creado_por }}</li>
-        <li><strong>Fecha de creación:</strong> {{ project.creado_en }}</li>
-        <li><strong>Última actualización:</strong> {{ project.actualizado_en }}</li>
-    </ul>
-
-    <h2>Anexos</h2>
-    {% if project.attachments.all %}
+    <fieldset>
+        <legend>Información general</legend>
         <ul>
-            {% for attachment in project.attachments.all %}
-                <li>
-                    <a href="{{ attachment.archivo.url }}" target="_blank">{{ attachment.descripcion|default:attachment.archivo.name }}</a>
-                    - {{ attachment.cargado_en }}
-                </li>
-            {% endfor %}
+            <li><strong>Nombre:</strong> {{ project.nombre }}</li>
+            <li><strong>Sector:</strong> {{ project.sector }}</li>
+            <li><strong>Problema:</strong> {{ project.problema }}</li>
+            <li><strong>Objetivo general:</strong> {{ project.objetivo_general }}</li>
+            <li><strong>Población objetivo:</strong> {{ project.poblacion_objetivo }}</li>
+            <li><strong>Presupuesto:</strong> {{ project.presupuesto }}</li>
+            <li><strong>Estado:</strong> {{ project.estado }}</li>
+            <li><strong>Observaciones:</strong> {{ project.observaciones }}</li>
         </ul>
-    {% else %}
-        <p>No hay anexos cargados.</p>
-    {% endif %}
+    </fieldset>
 
-    <h3>Cargar nuevo anexo</h3>
-    <form method="post" action="/projects/{{ project.id }}/attachments/new/" enctype="multipart/form-data">
-        {% csrf_token %}
-        {{ attachment_form.as_p }}
-        <button type="submit">Subir anexo</button>
-    </form>
+    <fieldset>
+        <legend>Ubicación</legend>
+        <ul>
+            <li><strong>Comuna:</strong> {{ project.comuna }}</li>
+            <li><strong>Barrio:</strong> {{ project.barrio }}</li>
+            <li><strong>Corregimiento:</strong> {{ project.corregimiento }}</li>
+            <li><strong>Vereda:</strong> {{ project.vereda }}</li>
+        </ul>
+    </fieldset>
 
-    <p><a href="/projects/{{ project.id }}/edit/">Editar proyecto</a></p>
-    <p><a href="/projects/">Volver al listado</a></p>
-</body>
-</html>
+    <fieldset>
+        <legend>Trazabilidad</legend>
+        <ul>
+            <li><strong>Creado por:</strong> {{ project.creado_por }}</li>
+            <li><strong>Fecha de creación:</strong> {{ project.creado_en }}</li>
+            <li><strong>Última actualización:</strong> {{ project.actualizado_en }}</li>
+        </ul>
+    </fieldset>
+
+    <fieldset>
+        <legend>Anexos</legend>
+        {% if project.attachments.all %}
+            <ul>
+                {% for attachment in project.attachments.all %}
+                    <li>
+                        <a class="btn-link" href="{{ attachment.archivo.url }}" target="_blank">
+                            {{ attachment.descripcion|default:attachment.archivo.name }}
+                        </a>
+                        - {{ attachment.cargado_en }}
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>No hay anexos cargados.</p>
+        {% endif %}
+
+        <h3>Cargar nuevo anexo</h3>
+        <form method="post" action="/projects/{{ project.id }}/attachments/new/" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ attachment_form.as_p }}
+            <button type="submit">Subir anexo</button>
+        </form>
+    </fieldset>
+
+    <p>
+        <a class="btn-link" href="/projects/{{ project.id }}/edit/">Editar proyecto</a>
+        <a class="btn-link" href="/projects/">Volver al listado</a>
+    </p>
+{% endblock %}

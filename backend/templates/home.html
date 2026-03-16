@@ -1,26 +1,26 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <title>Sistema de Proyectos</title>
-</head>
-<body>
+{% extends "base/base.html" %}
 
-<h1>Sistema de Proyectos de Inversión Pública</h1>
+{% block title %}Inicio{% endblock %}
 
-<p>Bienvenido al sistema.</p>
+{% block content %}
+    <h1>Bienvenido al sistema</h1>
 
-<h2>Módulos</h2>
+    <p>
+        Este aplicativo permite gestionar proyectos de inversión pública,
+        su información principal, ubicación, anexos y trazabilidad básica.
+    </p>
 
-<ul>
-    <li><a href="/projects/">Gestión de proyectos</a></li>
-    <li><a href="/users/">Gestión de usuarios</a></li>
-</ul>
+    <h2>Módulos principales</h2>
 
-<p>
-<a href="/users/login/">Iniciar sesión</a> |
-<a href="/users/logout/">Cerrar sesión</a>
-</p>
+    <div class="card">
+        <h3>Gestión de proyectos</h3>
+        <p>Consulta, crea, edita y revisa proyectos registrados en el sistema.</p>
+        <a class="btn-link" href="/projects/">Ir al módulo</a>
+    </div>
 
-</body>
-</html>
+    <div class="card">
+        <h3>Gestión de usuarios</h3>
+        <p>Consulta usuarios y accede al sistema mediante autenticación.</p>
+        <a class="btn-link" href="/users/">Ir al módulo</a>
+    </div>
+{% endblock %}

@@ -1,13 +1,13 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <title>Listado de proyectos</title>
-</head>
-<body>
+{% extends "base/base.html" %}
+
+{% block title %}Listado de proyectos{% endblock %}
+
+{% block content %}
     <h1>Listado de proyectos</h1>
 
-    <p><a href="/projects/new/">Crear nuevo proyecto</a></p>
+    <p>
+        <a class="btn-link" href="/projects/new/">Crear nuevo proyecto</a>
+    </p>
 
     <h2>Filtros</h2>
     <form method="get">
@@ -56,27 +56,23 @@
         </p>
 
         <button type="submit">Filtrar</button>
-        <a href="/projects/">Limpiar filtros</a>
+        <a class="btn-link" href="/projects/">Limpiar filtros</a>
     </form>
 
     <hr>
 
     {% if projects %}
-        <ul>
-            {% for project in projects %}
-                <li>
-                    <a href="/projects/{{ project.id }}/">{{ project.nombre }}</a><br>
-                    <strong>Sector:</strong> {{ project.sector }}<br>
-                    <strong>Estado:</strong> {{ project.estado }}<br>
-                    <strong>Comuna:</strong> {{ project.comuna|default:"-" }}<br>
-                    <strong>Corregimiento:</strong> {{ project.corregimiento|default:"-" }}<br>
-                    <strong>Creado por:</strong> {{ project.creado_por|default:"-" }}
-                </li>
-                <br>
-            {% endfor %}
-        </ul>
+        {% for project in projects %}
+            <div class="card">
+                <h3><a class="btn-link" href="/projects/{{ project.id }}/">{{ project.nombre }}</a></h3>
+                <p><strong>Sector:</strong> {{ project.sector }}</p>
+                <p><strong>Estado:</strong> {{ project.estado }}</p>
+                <p><strong>Comuna:</strong> {{ project.comuna|default:"-" }}</p>
+                <p><strong>Corregimiento:</strong> {{ project.corregimiento|default:"-" }}</p>
+                <p><strong>Creado por:</strong> {{ project.creado_por|default:"-" }}</p>
+            </div>
+        {% endfor %}
     {% else %}
         <p>No hay proyectos registrados con esos criterios.</p>
     {% endif %}
-</body>
-</html>
+{% endblock %}
