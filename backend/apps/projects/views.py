@@ -1,3 +1,4 @@
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404, redirect, render
 from .forms import ProjectAttachmentForm, ProjectForm
 from .models import Project
@@ -8,13 +9,13 @@ def project_list(request):
     return render(request, "projects/project_list.html", {"projects": projects})
 
 
+@login_required
 def project_create(request):
     if request.method == "POST":
         form = ProjectForm(request.POST)
         if form.is_valid():
             project = form.save(commit=False)
-            if request.user.is_authenticated:
-                project.creado_por = request.user
+            project.creado_por = request.user
             project.save()
             return redirect("project_detail", project_id=project.id)
     else:
@@ -36,6 +37,7 @@ def project_detail(request, project_id):
     )
 
 
+@login_required
 def project_update(request, project_id):
     project = get_object_or_404(Project, id=project_id)
 
@@ -50,6 +52,7 @@ def project_update(request, project_id):
     return render(request, "projects/project_form.html", {"form": form, "project": project})
 
 
+@login_required
 def project_attachment_create(request, project_id):
     project = get_object_or_404(Project, id=project_id)
 
@@ -58,8 +61,7 @@ def project_attachment_create(request, project_id):
         if form.is_valid():
             attachment = form.save(commit=False)
             attachment.project = project
-            if request.user.is_authenticated:
-                attachment.cargado_por = request.user
+            attachment.cargado_por = request.user
             attachment.save()
 
     return redirect("project_detail", project_id=project.id)

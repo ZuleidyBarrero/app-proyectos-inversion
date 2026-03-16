@@ -7,7 +7,14 @@
 <body>
     <h1>Ingreso al sistema</h1>
 
-    <form>
+    {% if error %}
+        <div style="color: red; margin-bottom: 10px;">
+            {{ error }}
+        </div>
+    {% endif %}
+
+    <form method="post">
+        {% csrf_token %}
         <div>
             <label for="username">Usuario</label><br>
             <input type="text" id="username" name="username">
