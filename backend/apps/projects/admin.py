@@ -1,5 +1,13 @@
 from django.contrib import admin
-from .models import Barrio, Comuna, Corregimiento, Project, ProjectAttachment, Vereda
+from .models import (
+    Barrio,
+    Comuna,
+    Corregimiento,
+    Project,
+    ProjectAttachment,
+    ProjectStatusHistory,
+    Vereda,
+)
 
 
 @admin.register(Comuna)
@@ -35,6 +43,13 @@ class ProjectAttachmentInline(admin.TabularInline):
     extra = 1
 
 
+class ProjectStatusHistoryInline(admin.TabularInline):
+    model = ProjectStatusHistory
+    extra = 0
+    readonly_fields = ("estado_anterior", "estado_nuevo", "cambiado_por", "cambiado_en", "observacion")
+    can_delete = False
+
+
 @admin.register(Project)
 class ProjectAdmin(admin.ModelAdmin):
     list_display = (
@@ -51,7 +66,7 @@ class ProjectAdmin(admin.ModelAdmin):
     search_fields = ("nombre", "sector", "poblacion_objetivo")
     list_filter = ("estado", "sector", "comuna", "corregimiento", "creado_en")
     ordering = ("-creado_en",)
-    inlines = [ProjectAttachmentInline]
+    inlines = [ProjectAttachmentInline, ProjectStatusHistoryInline]
 
 
 @admin.register(ProjectAttachment)
@@ -60,3 +75,11 @@ class ProjectAttachmentAdmin(admin.ModelAdmin):
     search_fields = ("descripcion", "project__nombre")
     list_filter = ("cargado_en",)
     ordering = ("-cargado_en",)
+
+
+@admin.register(ProjectStatusHistory)
+class ProjectStatusHistoryAdmin(admin.ModelAdmin):
+    list_display = ("project", "estado_anterior", "estado_nuevo", "cambiado_por", "cambiado_en")
+    search_fields = ("project__nombre", "estado_anterior", "estado_nuevo", "observacion")
+    list_filter = ("estado_nuevo", "cambiado_en")
+    ordering = ("-cambiado_en",)

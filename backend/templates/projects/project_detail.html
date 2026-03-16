@@ -50,8 +50,34 @@
                     {% endfor %}
                 </select>
             </p>
+
+            <p>
+                <label for="observacion">Observación del cambio</label><br>
+                <input type="text" name="observacion" id="observacion" maxlength="255">
+            </p>
+
             <button type="submit">Actualizar estado</button>
         </form>
+
+    </fieldset>
+    <fieldset>
+        <legend>Historial de estados</legend>
+
+        {% if project.status_history.all %}
+            <ul>
+                {% for item in project.status_history.all %}
+                    <li>
+                        <strong>{{ item.cambiado_en }}</strong>:
+                        {{ item.estado_anterior|default:"Sin estado previo" }}
+                        → {{ item.estado_nuevo }}
+                        {% if item.cambiado_por %} por {{ item.cambiado_por }}{% endif %}
+                        {% if item.observacion %} | {{ item.observacion }}{% endif %}
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>No hay historial de cambios de estado.</p>
+        {% endif %}
     </fieldset>
 
     <fieldset>

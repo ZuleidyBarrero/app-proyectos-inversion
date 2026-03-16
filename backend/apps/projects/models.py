@@ -104,3 +104,18 @@ class ProjectAttachment(models.Model):
 
     def __str__(self):
         return self.descripcion or self.archivo.name
+        class ProjectStatusHistory(models.Model):
+    project = models.ForeignKey(Project, on_delete=models.CASCADE, related_name="status_history")
+    estado_anterior = models.CharField(max_length=20, blank=True)
+    estado_nuevo = models.CharField(max_length=20)
+    cambiado_por = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)
+    cambiado_en = models.DateTimeField(auto_now_add=True)
+    observacion = models.CharField(max_length=255, blank=True)
+
+    class Meta:
+        ordering = ["-cambiado_en"]
+        verbose_name = "Historial de estado"
+        verbose_name_plural = "Historial de estados"
+
+    def __str__(self):
+        return f"{self.project.nombre}: {self.estado_anterior} -> {self.estado_nuevo}"

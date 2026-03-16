@@ -4,7 +4,7 @@ from django.db.models import Q
 from django.shortcuts import get_object_or_404, redirect, render
 
 from .forms import ProjectAttachmentForm, ProjectForm
-from .models import Comuna, Corregimiento, Project
+from .models import Comuna, Corregimiento, Project, ProjectStatusHistory
 
 
 def project_list(request):
@@ -132,18 +132,28 @@ def project_archive(request, project_id):
 
     return render(request, "projects/project_archive_confirm.html", {"project": project})
 
-
 @login_required
 def project_change_status(request, project_id):
     project = get_object_or_404(Project, id=project_id)
 
     if request.method == "POST":
         nuevo_estado = request.POST.get("estado", "").strip()
+        observacion = request.POST.get("observacion", "").strip()
         estados_validos = [estado for estado, _ in Project.ESTADOS]
 
         if nuevo_estado in estados_validos:
+            estado_anterior = project.estado
             project.estado = nuevo_estado
             project.save()
+
+            ProjectStatusHistory.objects.create(
+                project=project,
+                estado_anterior=estado_anterior,
+                estado_nuevo=nuevo_estado,
+                cambiado_por=request.user,
+                observacion=observacion,
+            )
+
             messages.success(request, f"Estado actualizado a: {nuevo_estado}.")
         else:
             messages.error(request, "El estado seleccionado no es válido.")
