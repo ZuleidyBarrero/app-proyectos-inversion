@@ -24,3 +24,52 @@ class ProjectForm(forms.ModelForm):
             "objetivo_general": forms.Textarea(attrs={"rows": 4}),
             "observaciones": forms.Textarea(attrs={"rows": 4}),
         }
+
+    def clean(self):
+        cleaned_data = super().clean()
+
+        comuna = cleaned_data.get("comuna")
+        barrio = cleaned_data.get("barrio")
+        corregimiento = cleaned_data.get("corregimiento")
+        vereda = cleaned_data.get("vereda")
+
+        tiene_urbana = comuna or barrio
+        tiene_rural = corregimiento or vereda
+
+        # No permitir mezclar urbana y rural al mismo tiempo
+        if tiene_urbana and tiene_rural:
+            raise forms.ValidationError(
+                "El proyecto debe registrarse como urbano o rural, pero no ambos al mismo tiempo."
+            )
+
+        # Validaciones urbanas
+        if barrio and not comuna:
+            raise forms.ValidationError(
+                "Si seleccionas un barrio, debes seleccionar también una comuna."
+            )
+
+        if comuna and barrio:
+            if barrio.comuna != comuna:
+                raise forms.ValidationError(
+                    "El barrio seleccionado no pertenece a la comuna elegida."
+                )
+
+        # Validaciones rurales
+        if vereda and not corregimiento:
+            raise forms.ValidationError(
+                "Si seleccionas una vereda, debes seleccionar también un corregimiento."
+            )
+
+        if corregimiento and vereda:
+            if vereda.corregimiento != corregimiento:
+                raise forms.ValidationError(
+                    "La vereda seleccionada no pertenece al corregimiento elegido."
+                )
+
+        # Obligar a que tenga por lo menos una ubicación
+        if not tiene_urbana and not tiene_rural:
+            raise forms.ValidationError(
+                "Debes seleccionar una ubicación urbana o rural para el proyecto."
+            )
+
+        return cleaned_data
