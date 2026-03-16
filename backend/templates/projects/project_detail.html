@@ -34,6 +34,27 @@
         <li><strong>Última actualización:</strong> {{ project.actualizado_en }}</li>
     </ul>
 
+    <h2>Anexos</h2>
+    {% if project.attachments.all %}
+        <ul>
+            {% for attachment in project.attachments.all %}
+                <li>
+                    <a href="{{ attachment.archivo.url }}" target="_blank">{{ attachment.descripcion|default:attachment.archivo.name }}</a>
+                    - {{ attachment.cargado_en }}
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No hay anexos cargados.</p>
+    {% endif %}
+
+    <h3>Cargar nuevo anexo</h3>
+    <form method="post" action="/projects/{{ project.id }}/attachments/new/" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ attachment_form.as_p }}
+        <button type="submit">Subir anexo</button>
+    </form>
+
     <p><a href="/projects/{{ project.id }}/edit/">Editar proyecto</a></p>
     <p><a href="/projects/">Volver al listado</a></p>
 </body>

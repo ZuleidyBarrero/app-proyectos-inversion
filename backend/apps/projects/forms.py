@@ -1,5 +1,5 @@
 from django import forms
-from .models import Project
+from .models import Project, ProjectAttachment
 
 
 class ProjectForm(forms.ModelForm):
@@ -36,13 +36,11 @@ class ProjectForm(forms.ModelForm):
         tiene_urbana = comuna or barrio
         tiene_rural = corregimiento or vereda
 
-        # No permitir mezclar urbana y rural al mismo tiempo
         if tiene_urbana and tiene_rural:
             raise forms.ValidationError(
                 "El proyecto debe registrarse como urbano o rural, pero no ambos al mismo tiempo."
             )
 
-        # Validaciones urbanas
         if barrio and not comuna:
             raise forms.ValidationError(
                 "Si seleccionas un barrio, debes seleccionar también una comuna."
@@ -54,7 +52,6 @@ class ProjectForm(forms.ModelForm):
                     "El barrio seleccionado no pertenece a la comuna elegida."
                 )
 
-        # Validaciones rurales
         if vereda and not corregimiento:
             raise forms.ValidationError(
                 "Si seleccionas una vereda, debes seleccionar también un corregimiento."
@@ -66,10 +63,15 @@ class ProjectForm(forms.ModelForm):
                     "La vereda seleccionada no pertenece al corregimiento elegido."
                 )
 
-        # Obligar a que tenga por lo menos una ubicación
         if not tiene_urbana and not tiene_rural:
             raise forms.ValidationError(
                 "Debes seleccionar una ubicación urbana o rural para el proyecto."
             )
 
         return cleaned_data
+
+
+class ProjectAttachmentForm(forms.ModelForm):
+    class Meta:
+        model = ProjectAttachment
+        fields = ["archivo", "descripcion"]

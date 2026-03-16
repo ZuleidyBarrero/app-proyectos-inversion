@@ -88,3 +88,4 @@ class Project(models.Model):
 
     def __str__(self):
         return self.nombre
+        “Ya hice el commit de validaciones de ubicación”
