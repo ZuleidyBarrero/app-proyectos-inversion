@@ -1,10 +1,8 @@
 # Formularios de la app projects
-# Formularios de la app projects
 
 class ProjectForm:
     """
     Formulario conceptual inicial para capturar datos del proyecto.
-    Todavía no usa Django Forms real.
     """
 
     campos = [
@@ -14,10 +12,19 @@ class ProjectForm:
         "objetivo_general",
         "poblacion_objetivo",
         "barrio",
-        "vereda",
         "comuna",
+        "vereda",
         "corregimiento",
         "presupuesto",
         "estado",
         "observaciones",
+        "anexos",
+    ]
+
+    estados_disponibles = [
+        "Borrador",
+        "En revisión",
+        "Aprobado",
+        "Rechazado",
+        "Archivado",
     ]

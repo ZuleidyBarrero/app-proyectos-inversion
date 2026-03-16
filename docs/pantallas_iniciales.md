@@ -24,3 +24,11 @@ Permitirá actualizar la información existente.
 
 ### 5. Detalle del proyecto
 Permitirá visualizar toda la información general, técnica y geográfica del proyecto.
+## Ajuste de formulario
+
+La pantalla de creación y edición del proyecto ya contempla:
+- información general
+- ubicación urbana y rural
+- estado del proyecto
+- observaciones
+- carga inicial de anexos

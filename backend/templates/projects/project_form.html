@@ -8,6 +8,8 @@
     <h1>Formulario de proyecto</h1>
 
     <form>
+        <h2>Información general</h2>
+
         <div>
             <label for="nombre">Nombre del proyecto</label><br>
             <input type="text" id="nombre" name="nombre">
@@ -45,8 +47,56 @@
         <br>
 
         <div>
+            <label for="estado">Estado</label><br>
+            <select id="estado" name="estado">
+                <option>Borrador</option>
+                <option>En revisión</option>
+                <option>Aprobado</option>
+                <option>Rechazado</option>
+                <option>Archivado</option>
+            </select>
+        </div>
+        <br>
+
+        <h2>Ubicación</h2>
+
+        <div>
+            <label for="comuna">Comuna</label><br>
+            <input type="text" id="comuna" name="comuna">
+        </div>
+        <br>
+
+        <div>
+            <label for="barrio">Barrio</label><br>
+            <input type="text" id="barrio" name="barrio">
+        </div>
+        <br>
+
+        <div>
+            <label for="corregimiento">Corregimiento</label><br>
+            <input type="text" id="corregimiento" name="corregimiento">
+        </div>
+        <br>
+
+        <div>
+            <label for="vereda">Vereda</label><br>
+            <input type="text" id="vereda" name="vereda">
+        </div>
+        <br>
+
+        <h2>Observaciones</h2>
+
+        <div>
             <label for="observaciones">Observaciones</label><br>
             <textarea id="observaciones" name="observaciones"></textarea>
+        </div>
+        <br>
+
+        <h2>Anexos</h2>
+
+        <div>
+            <label for="anexos">Cargar archivo</label><br>
+            <input type="file" id="anexos" name="anexos">
         </div>
         <br>
 

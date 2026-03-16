@@ -1,5 +1,14 @@
 # Servicios de la app projects
 
+ESTADOS_VALIDOS = [
+    "Borrador",
+    "En revisión",
+    "Aprobado",
+    "Rechazado",
+    "Archivado",
+]
+
+
 def validar_presupuesto(presupuesto):
     return presupuesto >= 0
 
@@ -10,6 +19,10 @@ def validar_ubicacion(barrio=None, vereda=None):
 
 def estado_inicial():
     return "Borrador"
+
+
+def estado_valido(estado):
+    return estado in ESTADOS_VALIDOS
 
 
 def obtener_comuna_desde_barrio(barrio):
