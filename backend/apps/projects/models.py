@@ -104,7 +104,7 @@ class ProjectAttachment(models.Model):
 
     def __str__(self):
         return self.descripcion or self.archivo.name
-        class ProjectStatusHistory(models.Model):
+class ProjectStatusHistory(models.Model):
     project = models.ForeignKey(Project, on_delete=models.CASCADE, related_name="status_history")
     estado_anterior = models.CharField(max_length=20, blank=True)
     estado_nuevo = models.CharField(max_length=20)
