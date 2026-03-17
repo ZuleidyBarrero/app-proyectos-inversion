@@ -4,7 +4,8 @@ from django.db.models import Q
 from django.shortcuts import get_object_or_404, redirect, render
 
 from .forms import ProjectAttachmentForm, ProjectForm, ProjectReviewForm
-from .models import Comuna, Corregimiento, Project, ProjectStatusHistory, ProjectReview
+from .models import Comuna, Corregimiento, Project, ProjectReview, ProjectStatusHistory
+
 
 def project_list(request):
     projects = Project.objects.select_related(
@@ -75,7 +76,6 @@ def project_detail(request, project_id):
     project = get_object_or_404(Project, id=project_id)
     attachment_form = ProjectAttachmentForm()
     review_form = ProjectReviewForm()
-
     estados_disponibles = [estado for estado, _ in Project.ESTADOS if estado != project.estado]
 
     return render(
@@ -86,32 +86,6 @@ def project_detail(request, project_id):
             "attachment_form": attachment_form,
             "review_form": review_form,
             "estados_disponibles": estados_disponibles,
-            <fieldset>
-                <legend>Observaciones de revisión</legend>
-
-                {% if project.reviews.all %}
-                    <ul>
-                        {% for review in project.reviews.all %}
-                            <li>
-                                <strong>{{ review.creado_en }}</strong> -
-                                {{ review.tipo }}
-                                {% if review.creado_por %} por {{ review.creado_por }}{% endif %}
-                                <br>
-                                {{ review.observacion }}
-                            </li>
-                        {% endfor %}
-                    </ul>
-                {% else %}
-                    <p>No hay observaciones registradas.</p>
-                {% endif %}
-
-                <h3>Agregar observación</h3>
-                <form method="post" action="/projects/{{ project.id }}/reviews/new/">
-                    {% csrf_token %}
-                    {{ review_form.as_p }}
-                    <button type="submit">Guardar observación</button>
-                </form>
-            </fieldset>
         },
     )
 
@@ -160,6 +134,7 @@ def project_archive(request, project_id):
 
     return render(request, "projects/project_archive_confirm.html", {"project": project})
 
+
 @login_required
 def project_change_status(request, project_id):
     project = get_object_or_404(Project, id=project_id)
@@ -187,6 +162,7 @@ def project_change_status(request, project_id):
             messages.error(request, "El estado seleccionado no es válido.")
 
     return redirect("project_detail", project_id=project.id)
+
 
 @login_required
 def project_review_create(request, project_id):
