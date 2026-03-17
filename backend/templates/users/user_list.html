@@ -6,7 +6,14 @@
     <h1>Listado de usuarios</h1>
 
     <div class="card">
-        <p>Este módulo queda listo para ampliarse con gestión real de usuarios y roles.</p>
-        <p>Por ahora, la administración principal de usuarios se realiza desde el panel de Django Admin.</p>
+        <p>Los usuarios y roles del sistema se administran principalmente desde Django Admin.</p>
+        <p>Para pruebas iniciales se han previsto estos perfiles:</p>
+
+        <ul>
+            <li><strong>Formulador:</strong> crea y edita proyectos, carga anexos.</li>
+            <li><strong>Revisor:</strong> registra observaciones de revisión.</li>
+            <li><strong>Aprobador:</strong> cambia estado y archiva proyectos.</li>
+            <li><strong>Consulta:</strong> solo visualiza.</li>
+        </ul>
     </div>
 {% endblock %}
