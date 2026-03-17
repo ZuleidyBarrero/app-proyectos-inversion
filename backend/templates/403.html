@@ -1,0 +1,17 @@
+{% extends "base/base.html" %}
+
+{% block title %}Acceso denegado{% endblock %}
+
+{% block content %}
+    <h1>Acceso denegado</h1>
+
+    <div class="card">
+        <p>{{ message|default:"No tienes permisos para realizar esta acción en el sistema." }}</p>
+        <p>Si consideras que esto es un error, consulta con el administrador.</p>
+    </div>
+
+    <p>
+        <a class="btn-link" href="/">Ir al inicio</a>
+        <a class="btn-link" href="/projects/">Volver a proyectos</a>
+    </p>
+{% endblock %}

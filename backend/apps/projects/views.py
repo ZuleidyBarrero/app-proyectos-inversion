@@ -1,7 +1,7 @@
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.db.models import Q
-from django.http import HttpResponseForbidden
+from .responses import forbidden_response
 from django.shortcuts import get_object_or_404, redirect, render
 
 from .forms import ProjectAttachmentForm, ProjectForm, ProjectReviewForm
@@ -18,7 +18,7 @@ from .permissions import (
 @login_required
 def project_list(request):
     if not can_view_projects(request.user):
-        return HttpResponseForbidden("No tienes permiso para ver proyectos.")
+        return forbidden_response(request, "No tienes permiso para ver proyectos.")  
 
     projects = Project.objects.select_related(
         "comuna", "barrio", "corregimiento", "vereda", "creado_por"
@@ -71,7 +71,7 @@ def project_list(request):
 @login_required
 def project_create(request):
     if not can_create_project(request.user):
-        return HttpResponseForbidden("No tienes permiso para crear proyectos.")
+        return forbidden_response(request, "No tienes permiso para crear proyectos.")
 
     if request.method == "POST":
         form = ProjectForm(request.POST)
@@ -90,7 +90,7 @@ def project_create(request):
 @login_required
 def project_detail(request, project_id):
     if not can_view_projects(request.user):
-        return HttpResponseForbidden("No tienes permiso para ver este proyecto.")
+        return forbidden_response(request, "No tienes permiso para ver este proyecto.")
 
     project = get_object_or_404(Project, id=project_id)
     attachment_form = ProjectAttachmentForm()
@@ -115,7 +115,7 @@ def project_detail(request, project_id):
 @login_required
 def project_update(request, project_id):
     if not can_edit_project(request.user):
-        return HttpResponseForbidden("No tienes permiso para editar proyectos.")
+        return forbidden_response(request, "No tienes permiso para editar proyectos.")
 
     project = get_object_or_404(Project, id=project_id)
 
@@ -134,7 +134,7 @@ def project_update(request, project_id):
 @login_required
 def project_attachment_create(request, project_id):
     if not can_edit_project(request.user):
-        return HttpResponseForbidden("No tienes permiso para cargar anexos.")
+        return forbidden_response(request, "No tienes permiso para archivar proyectos.")
 
     project = get_object_or_404(Project, id=project_id)
 
@@ -179,7 +179,7 @@ def project_archive(request, project_id):
 @login_required
 def project_change_status(request, project_id):
     if not can_change_project_status(request.user):
-        return HttpResponseForbidden("No tienes permiso para cambiar el estado del proyecto.")
+        return forbidden_response(request, "No tienes permiso para cambiar el estado del proyecto.")
 
     project = get_object_or_404(Project, id=project_id)
 
@@ -211,7 +211,7 @@ def project_change_status(request, project_id):
 @login_required
 def project_review_create(request, project_id):
     if not can_review_project(request.user):
-        return HttpResponseForbidden("No tienes permiso para registrar observaciones.")
+        return forbidden_response(request, "No tienes permiso para registrar observaciones.")
 
     project = get_object_or_404(Project, id=project_id)
 
