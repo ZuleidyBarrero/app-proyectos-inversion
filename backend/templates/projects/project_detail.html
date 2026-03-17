@@ -38,6 +38,7 @@
         </ul>
     </fieldset>
 
+    {% if puede_cambiar_estado %}
     <fieldset>
         <legend>Cambio de estado</legend>
         <form method="post" action="/projects/{{ project.id }}/change-status/">
@@ -58,8 +59,9 @@
 
             <button type="submit">Actualizar estado</button>
         </form>
-
     </fieldset>
+    {% endif %}
+
     <fieldset>
         <legend>Historial de estados</legend>
 
@@ -81,6 +83,35 @@
     </fieldset>
 
     <fieldset>
+        <legend>Observaciones de revisión</legend>
+
+        {% if project.reviews.all %}
+            <ul>
+                {% for review in project.reviews.all %}
+                    <li>
+                        <strong>{{ review.creado_en }}</strong> -
+                        {{ review.tipo }}
+                        {% if review.creado_por %} por {{ review.creado_por }}{% endif %}
+                        <br>
+                        {{ review.observacion }}
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>No hay observaciones registradas.</p>
+        {% endif %}
+
+        {% if puede_revisar %}
+        <h3>Agregar observación</h3>
+        <form method="post" action="/projects/{{ project.id }}/reviews/new/">
+            {% csrf_token %}
+            {{ review_form.as_p }}
+            <button type="submit">Guardar observación</button>
+        </form>
+        {% endif %}
+    </fieldset>
+
+    <fieldset>
         <legend>Anexos</legend>
         {% if project.attachments.all %}
             <ul>
@@ -97,17 +128,23 @@
             <p>No hay anexos cargados.</p>
         {% endif %}
 
+        {% if puede_editar %}
         <h3>Cargar nuevo anexo</h3>
         <form method="post" action="/projects/{{ project.id }}/attachments/new/" enctype="multipart/form-data">
             {% csrf_token %}
             {{ attachment_form.as_p }}
             <button type="submit">Subir anexo</button>
         </form>
+        {% endif %}
     </fieldset>
 
     <p>
-        <a class="btn-link" href="/projects/{{ project.id }}/edit/">Editar proyecto</a>
-        <a class="btn-link" href="/projects/{{ project.id }}/archive/">Archivar proyecto</a>
+        {% if puede_editar %}
+            <a class="btn-link" href="/projects/{{ project.id }}/edit/">Editar proyecto</a>
+        {% endif %}
+        {% if puede_cambiar_estado %}
+            <a class="btn-link" href="/projects/{{ project.id }}/archive/">Archivar proyecto</a>
+        {% endif %}
         <a class="btn-link" href="/projects/">Volver al listado</a>
     </p>
 {% endblock %}
