@@ -5,6 +5,7 @@ from .models import (
     Corregimiento,
     Project,
     ProjectAttachment,
+    ProjectReview,
     ProjectStatusHistory,
     Vereda,
 )
@@ -50,6 +51,11 @@ class ProjectStatusHistoryInline(admin.TabularInline):
     can_delete = False
 
 
+class ProjectReviewInline(admin.TabularInline):
+    model = ProjectReview
+    extra = 1
+
+
 @admin.register(Project)
 class ProjectAdmin(admin.ModelAdmin):
     list_display = (
@@ -68,6 +74,7 @@ class ProjectAdmin(admin.ModelAdmin):
     ordering = ("-creado_en",)
     inlines = [ProjectAttachmentInline, ProjectStatusHistoryInline, ProjectReviewInline]
 
+
 @admin.register(ProjectAttachment)
 class ProjectAttachmentAdmin(admin.ModelAdmin):
     list_display = ("project", "descripcion", "cargado_por", "cargado_en")
@@ -82,12 +89,8 @@ class ProjectStatusHistoryAdmin(admin.ModelAdmin):
     search_fields = ("project__nombre", "estado_anterior", "estado_nuevo", "observacion")
     list_filter = ("estado_nuevo", "cambiado_en")
     ordering = ("-cambiado_en",)
-ProjectReview,
 
-class ProjectReviewInline(admin.TabularInline):
-    model = ProjectReview
-    extra = 1
-    
+
 @admin.register(ProjectReview)
 class ProjectReviewAdmin(admin.ModelAdmin):
     list_display = ("project", "tipo", "creado_por", "creado_en")
