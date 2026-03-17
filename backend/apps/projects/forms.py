@@ -1,6 +1,13 @@
 from django import forms
-from .models import Barrio, Comuna, Corregimiento, Project, ProjectAttachment, Vereda
-
+from .models import (
+    Barrio,
+    Comuna,
+    Corregimiento,
+    Project,
+    ProjectAttachment,
+    ProjectReview,
+    Vereda,
+)
 
 class ProjectForm(forms.ModelForm):
     class Meta:
