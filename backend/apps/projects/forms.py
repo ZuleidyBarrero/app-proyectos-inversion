@@ -111,3 +111,11 @@ class ProjectAttachmentForm(forms.ModelForm):
     class Meta:
         model = ProjectAttachment
         fields = ["archivo", "descripcion"]
+
+class ProjectReviewForm(forms.ModelForm):
+    class Meta:
+        model = ProjectReview
+        fields = ["tipo", "observacion"]
+        widgets = {
+            "observacion": forms.Textarea(attrs={"rows": 3}),
+        }

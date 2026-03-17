@@ -3,9 +3,8 @@ from django.contrib.auth.decorators import login_required
 from django.db.models import Q
 from django.shortcuts import get_object_or_404, redirect, render
 
-from .forms import ProjectAttachmentForm, ProjectForm
-from .models import Comuna, Corregimiento, Project, ProjectStatusHistory
-
+from .forms import ProjectAttachmentForm, ProjectForm, ProjectReviewForm
+from .models import Comuna, Corregimiento, Project, ProjectStatusHistory, ProjectReview
 
 def project_list(request):
     projects = Project.objects.select_related(
@@ -75,6 +74,8 @@ def project_create(request):
 def project_detail(request, project_id):
     project = get_object_or_404(Project, id=project_id)
     attachment_form = ProjectAttachmentForm()
+    review_form = ProjectReviewForm()
+
     estados_disponibles = [estado for estado, _ in Project.ESTADOS if estado != project.estado]
 
     return render(
@@ -83,7 +84,34 @@ def project_detail(request, project_id):
         {
             "project": project,
             "attachment_form": attachment_form,
+            "review_form": review_form,
             "estados_disponibles": estados_disponibles,
+            <fieldset>
+                <legend>Observaciones de revisión</legend>
+
+                {% if project.reviews.all %}
+                    <ul>
+                        {% for review in project.reviews.all %}
+                            <li>
+                                <strong>{{ review.creado_en }}</strong> -
+                                {{ review.tipo }}
+                                {% if review.creado_por %} por {{ review.creado_por }}{% endif %}
+                                <br>
+                                {{ review.observacion }}
+                            </li>
+                        {% endfor %}
+                    </ul>
+                {% else %}
+                    <p>No hay observaciones registradas.</p>
+                {% endif %}
+
+                <h3>Agregar observación</h3>
+                <form method="post" action="/projects/{{ project.id }}/reviews/new/">
+                    {% csrf_token %}
+                    {{ review_form.as_p }}
+                    <button type="submit">Guardar observación</button>
+                </form>
+            </fieldset>
         },
     )
 
@@ -157,5 +185,20 @@ def project_change_status(request, project_id):
             messages.success(request, f"Estado actualizado a: {nuevo_estado}.")
         else:
             messages.error(request, "El estado seleccionado no es válido.")
+
+    return redirect("project_detail", project_id=project.id)
+
+@login_required
+def project_review_create(request, project_id):
+    project = get_object_or_404(Project, id=project_id)
+
+    if request.method == "POST":
+        form = ProjectReviewForm(request.POST)
+        if form.is_valid():
+            review = form.save(commit=False)
+            review.project = project
+            review.creado_por = request.user
+            review.save()
+            messages.success(request, "Observación registrada correctamente.")
 
     return redirect("project_detail", project_id=project.id)

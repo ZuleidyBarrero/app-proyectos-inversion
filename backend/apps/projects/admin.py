@@ -66,8 +66,7 @@ class ProjectAdmin(admin.ModelAdmin):
     search_fields = ("nombre", "sector", "poblacion_objetivo")
     list_filter = ("estado", "sector", "comuna", "corregimiento", "creado_en")
     ordering = ("-creado_en",)
-    inlines = [ProjectAttachmentInline, ProjectStatusHistoryInline]
-
+    inlines = [ProjectAttachmentInline, ProjectStatusHistoryInline, ProjectReviewInline]
 
 @admin.register(ProjectAttachment)
 class ProjectAttachmentAdmin(admin.ModelAdmin):
@@ -83,3 +82,15 @@ class ProjectStatusHistoryAdmin(admin.ModelAdmin):
     search_fields = ("project__nombre", "estado_anterior", "estado_nuevo", "observacion")
     list_filter = ("estado_nuevo", "cambiado_en")
     ordering = ("-cambiado_en",)
+ProjectReview,
+
+class ProjectReviewInline(admin.TabularInline):
+    model = ProjectReview
+    extra = 1
+    
+@admin.register(ProjectReview)
+class ProjectReviewAdmin(admin.ModelAdmin):
+    list_display = ("project", "tipo", "creado_por", "creado_en")
+    search_fields = ("project__nombre", "observacion")
+    list_filter = ("tipo", "creado_en")
+    ordering = ("-creado_en",)

@@ -119,3 +119,24 @@ class ProjectStatusHistory(models.Model):
 
     def __str__(self):
         return f"{self.project.nombre}: {self.estado_anterior} -> {self.estado_nuevo}"
+class ProjectReview(models.Model):
+    TIPOS = [
+        ("Tecnica", "Técnica"),
+        ("Juridica", "Jurídica"),
+        ("Financiera", "Financiera"),
+        ("General", "General"),
+    ]
+
+    project = models.ForeignKey(Project, on_delete=models.CASCADE, related_name="reviews")
+    tipo = models.CharField(max_length=20, choices=TIPOS, default="General")
+    observacion = models.TextField()
+    creado_por = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)
+    creado_en = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        ordering = ["-creado_en"]
+        verbose_name = "Observación de revisión"
+        verbose_name_plural = "Observaciones de revisión"
+
+    def __str__(self):
+        return f"{self.project.nombre} - {self.tipo}"
