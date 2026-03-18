@@ -52,3 +52,6 @@
 ## Nuevo avance funcional
 - historial de cambios de estado
 - dashboard inicial con indicadores básicos
+## Nuevo avance funcional
+- menú dinámico por rol
+- dashboard visual con tarjetas de indicadores

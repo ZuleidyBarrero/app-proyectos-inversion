@@ -9,40 +9,68 @@
         Vista general de proyectos registrados en el aplicativo.
     </p>
 
-    <h2>Resumen general</h2>
+    <div class="dashboard-grid">
+        <div class="stat-card bg-total">
+            <h3>Total de proyectos</h3>
+            <p>{{ total_proyectos }}</p>
+        </div>
 
-    <div class="card">
-        <p><strong>Total de proyectos:</strong> {{ total_proyectos }}</p>
-    </div>
+        <div class="stat-card bg-borrador">
+            <h3>Borrador</h3>
+            <p>{{ proyectos_borrador }}</p>
+        </div>
 
-    <h2>Proyectos por estado</h2>
+        <div class="stat-card bg-revision">
+            <h3>En revisión</h3>
+            <p>{{ proyectos_revision }}</p>
+        </div>
 
-    <div class="card">
-        <p><strong>Borrador:</strong> {{ proyectos_borrador }}</p>
-        <p><strong>En revisión:</strong> {{ proyectos_revision }}</p>
-        <p><strong>Aprobados:</strong> {{ proyectos_aprobados }}</p>
-        <p><strong>Rechazados:</strong> {{ proyectos_rechazados }}</p>
-        <p><strong>Archivados:</strong> {{ proyectos_archivados }}</p>
-    </div>
+        <div class="stat-card bg-aprobado">
+            <h3>Aprobados</h3>
+            <p>{{ proyectos_aprobados }}</p>
+        </div>
 
-    <h2>Clasificación territorial</h2>
+        <div class="stat-card bg-rechazado">
+            <h3>Rechazados</h3>
+            <p>{{ proyectos_rechazados }}</p>
+        </div>
 
-    <div class="card">
-        <p><strong>Urbanos:</strong> {{ proyectos_urbanos }}</p>
-        <p><strong>Rurales:</strong> {{ proyectos_rurales }}</p>
+        <div class="stat-card bg-archivado">
+            <h3>Archivados</h3>
+            <p>{{ proyectos_archivados }}</p>
+        </div>
+
+        <div class="stat-card bg-urbano">
+            <h3>Urbanos</h3>
+            <p>{{ proyectos_urbanos }}</p>
+        </div>
+
+        <div class="stat-card bg-rural">
+            <h3>Rurales</h3>
+            <p>{{ proyectos_rurales }}</p>
+        </div>
     </div>
 
     <h2>Sectores con más proyectos</h2>
 
     <div class="card">
         {% if sectores %}
-            <ul>
-                {% for item in sectores %}
-                    <li>
-                        <strong>{{ item.sector }}</strong>: {{ item.total }}
-                    </li>
-                {% endfor %}
-            </ul>
+            <table class="simple-table">
+                <thead>
+                    <tr>
+                        <th>Sector</th>
+                        <th>Total</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in sectores %}
+                        <tr>
+                            <td>{{ item.sector }}</td>
+                            <td>{{ item.total }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
         {% else %}
             <p>No hay sectores registrados todavía.</p>
         {% endif %}

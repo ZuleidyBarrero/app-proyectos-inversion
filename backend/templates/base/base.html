@@ -115,6 +115,81 @@
             background: #fafbfc;
         }
 
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 16px;
+            margin-bottom: 25px;
+        }
+
+        .stat-card {
+            border-radius: 10px;
+            padding: 18px;
+            color: white;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+        }
+
+        .stat-card h3 {
+            margin: 0 0 8px 0;
+            font-size: 1rem;
+            color: white;
+        }
+
+        .stat-card p {
+            margin: 0;
+            font-size: 1.8rem;
+            font-weight: bold;
+        }
+
+        .bg-total {
+            background: #1f3c88;
+        }
+
+        .bg-borrador {
+            background: #546e7a;
+        }
+
+        .bg-revision {
+            background: #ef6c00;
+        }
+
+        .bg-aprobado {
+            background: #2e7d32;
+        }
+
+        .bg-rechazado {
+            background: #c62828;
+        }
+
+        .bg-archivado {
+            background: #6a1b9a;
+        }
+
+        .bg-urbano {
+            background: #00838f;
+        }
+
+        .bg-rural {
+            background: #6d4c41;
+        }
+
+        .simple-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+
+        .simple-table th,
+        .simple-table td {
+            border: 1px solid #d9dee8;
+            padding: 10px;
+            text-align: left;
+        }
+
+        .simple-table th {
+            background: #eef2f7;
+        }
+        
         footer {
             margin-top: 30px;
             text-align: center;
