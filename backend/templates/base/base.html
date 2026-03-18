@@ -132,13 +132,9 @@
     <header>
         <h1>Sistema de Proyectos de Inversión Pública</h1>
         <nav>
-            <a href="/">Inicio</a>
-            <a href="/projects/">Proyectos</a>
-            <a href="/projects/new/">Nuevo proyecto</a>
-            <a href="/users/">Usuarios</a>
-            <a href="/users/login/">Iniciar sesión</a>
-            <a href="/users/logout/">Cerrar sesión</a>
-            <a href="/admin/">Admin</a>
+            {% for item in main_menu %}
+                <a href="{{ item.url }}">{{ item.label }}</a>
+            {% endfor %}
         </nav>
     </header>
 
