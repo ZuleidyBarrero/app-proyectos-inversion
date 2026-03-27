@@ -5,6 +5,7 @@ def user_in_group(user, group_name):
 def build_menu_for_user(user):
     menu = [
         {"label": "Inicio", "url": "/"},
+        {"label": "Ayuda", "url": "/users/help/"},
     ]
 
     if not user.is_authenticated:
@@ -15,6 +16,7 @@ def build_menu_for_user(user):
         menu.extend([
             {"label": "Proyectos", "url": "/projects/"},
             {"label": "Nuevo proyecto", "url": "/projects/new/"},
+            {"label": "Documentos", "url": "/projects/documents/"},
             {"label": "Usuarios", "url": "/users/"},
             {"label": "Perfil", "url": "/users/profile/"},
             {"label": "Admin", "url": "/admin/"},
@@ -23,6 +25,7 @@ def build_menu_for_user(user):
         return menu
 
     menu.append({"label": "Proyectos", "url": "/projects/"})
+    menu.append({"label": "Documentos", "url": "/projects/documents/"})
 
     if user_in_group(user, "Formulador"):
         menu.append({"label": "Nuevo proyecto", "url": "/projects/new/"})

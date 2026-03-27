@@ -1,0 +1,68 @@
+{% extends "base/base.html" %}
+
+{% block title %}Consulta documental{% endblock %}
+
+{% block content %}
+    <h1>Consulta documental</h1>
+
+    <form method="get" class="card">
+        <p>
+            <label for="q">Buscar</label><br>
+            <input type="text" id="q" name="q" value="{{ q }}">
+        </p>
+
+        <p>
+            <label for="tipo">Tipo de observación</label><br>
+            <select id="tipo" name="tipo">
+                <option value="">Todos</option>
+                {% for value, label in tipos_review %}
+                    <option value="{{ value }}" {% if tipo == value %}selected{% endif %}>{{ label }}</option>
+                {% endfor %}
+            </select>
+        </p>
+
+        <button type="submit">Filtrar</button>
+        <a class="btn-link" href="/projects/documents/">Limpiar</a>
+    </form>
+
+    <h2>Observaciones</h2>
+    <div class="card">
+        {% if reviews %}
+            <ul>
+                {% for item in reviews %}
+                    <li>
+                        <strong>{{ item.project.nombre }}</strong> |
+                        {{ item.tipo }} |
+                        {{ item.creado_en }}
+                        {% if item.creado_por %} | {{ item.creado_por }}{% endif %}
+                        <br>
+                        {{ item.observacion }}
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>No se encontraron observaciones.</p>
+        {% endif %}
+    </div>
+
+    <h2>Anexos</h2>
+    <div class="card">
+        {% if attachments %}
+            <ul>
+                {% for item in attachments %}
+                    <li>
+                        <strong>{{ item.project.nombre }}</strong> |
+                        {{ item.cargado_en }}
+                        {% if item.cargado_por %} | {{ item.cargado_por }}{% endif %}
+                        <br>
+                        <a class="btn-link" href="{{ item.archivo.url }}" target="_blank">
+                            {{ item.descripcion|default:item.archivo.name }}
+                        </a>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>No se encontraron anexos.</p>
+        {% endif %}
+    </div>
+{% endblock %}

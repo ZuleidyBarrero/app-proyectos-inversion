@@ -5,9 +5,7 @@
 {% block content %}
     <h1>Dashboard inicial del sistema</h1>
 
-    <p>
-        Vista general de proyectos registrados en el aplicativo.
-    </p>
+    <p>Vista general de proyectos registrados en el aplicativo.</p>
 
     <div class="dashboard-grid">
         <div class="stat-card bg-total">
@@ -51,8 +49,49 @@
         </div>
     </div>
 
-    <h2>Sectores con más proyectos</h2>
+    <div class="dashboard-grid">
+        <div class="stat-card bg-total">
+            <h3>Observaciones</h3>
+            <p>{{ total_reviews }}</p>
+        </div>
 
+        <div class="stat-card bg-total">
+            <h3>Anexos</h3>
+            <p>{{ total_attachments }}</p>
+        </div>
+    </div>
+
+    <h2>Gráfica por estado</h2>
+    <div class="chart-card">
+        {% for item in estados_chart %}
+            <div class="bar-row">
+                <div class="bar-label">
+                    <span>{{ item.label }}</span>
+                    <span>{{ item.value }}</span>
+                </div>
+                <div class="bar-track">
+                    <div class="bar-fill" style="width: {% if total_proyectos > 0 %}{% widthratio item.value total_proyectos 100 %}{% else %}0{% endif %}%"></div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+
+    <h2>Gráfica territorial</h2>
+    <div class="chart-card">
+        {% for item in territorial_chart %}
+            <div class="bar-row">
+                <div class="bar-label">
+                    <span>{{ item.label }}</span>
+                    <span>{{ item.value }}</span>
+                </div>
+                <div class="bar-track">
+                    <div class="bar-fill" style="width: {% if total_proyectos > 0 %}{% widthratio item.value total_proyectos 100 %}{% else %}0{% endif %}%"></div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+
+    <h2>Sectores con más proyectos</h2>
     <div class="card">
         {% if sectores %}
             <table class="simple-table">
@@ -77,7 +116,6 @@
     </div>
 
     <h2>Accesos rápidos</h2>
-
     <div class="card">
         <p><a class="btn-link" href="/projects/">Ir al listado de proyectos</a></p>
         <p><a class="btn-link" href="/projects/new/">Crear nuevo proyecto</a></p>

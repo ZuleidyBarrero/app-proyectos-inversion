@@ -50,3 +50,5 @@ def profile_view(request):
             "accesos": accesos,
         },
     )
+def help_view(request):
+    return render(request, "users/help.html")

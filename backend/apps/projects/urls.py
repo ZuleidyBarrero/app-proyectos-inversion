@@ -12,4 +12,5 @@ urlpatterns = [
     path("<int:project_id>/reviews/new/", views.project_review_create, name="project_review_create"),
     path("ajax/barrios/", views.barrios_by_comuna, name="barrios_by_comuna"),
     path("ajax/veredas/", views.veredas_by_corregimiento, name="veredas_by_corregimiento"),
+    path("documents/", views.project_documents, name="project_documents"),
 ]

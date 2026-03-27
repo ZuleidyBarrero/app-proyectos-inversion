@@ -15,6 +15,16 @@ from .permissions import (
     can_view_projects,
 )
 
+from .models import (
+    Barrio,
+    Comuna,
+    Corregimiento,
+    Project,
+    ProjectAttachment,
+    ProjectReview,
+    ProjectStatusHistory,
+    Vereda,
+)
 
 @login_required
 def project_list(request):
@@ -251,3 +261,40 @@ def veredas_by_corregimiento(request):
     return JsonResponse({"results": data})
 
     return JsonResponse({"results": data})
+
+@login_required
+def project_documents(request):
+    if not can_view_projects(request.user):
+        return forbidden_response(request, "No tienes permiso para consultar esta información.")
+
+    q = request.GET.get("q", "").strip()
+    tipo = request.GET.get("tipo", "").strip()
+
+    reviews = ProjectReview.objects.select_related("project", "creado_por").all()
+    attachments = ProjectAttachment.objects.select_related("project", "cargado_por").all()
+
+    if q:
+        reviews = reviews.filter(
+            Q(project__nombre__icontains=q) |
+            Q(observacion__icontains=q) |
+            Q(tipo__icontains=q)
+        )
+        attachments = attachments.filter(
+            Q(project__nombre__icontains=q) |
+            Q(descripcion__icontains=q) |
+            Q(archivo__icontains=q)
+        )
+
+    if tipo:
+        reviews = reviews.filter(tipo=tipo)
+
+    context = {
+        "q": q,
+        "tipo": tipo,
+        "reviews": reviews,
+        "attachments": attachments,
+        "tipos_review": ProjectReview.TIPOS,
+    }
+    return render(request, "projects/project_documents.html", context)
+
+    

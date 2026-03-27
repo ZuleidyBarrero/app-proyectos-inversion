@@ -1,0 +1,46 @@
+{% extends "base/base.html" %}
+
+{% block title %}Ayuda rápida{% endblock %}
+
+{% block content %}
+    <h1>Ayuda rápida del sistema</h1>
+
+    <div class="card">
+        <h2>¿Qué hace este sistema?</h2>
+        <p>
+            Permite registrar, consultar, revisar y gestionar proyectos de inversión pública
+            con trazabilidad, anexos, observaciones y control por roles.
+        </p>
+    </div>
+
+    <div class="card">
+        <h2>Roles principales</h2>
+        <ul>
+            <li><strong>Formulador:</strong> crea y edita proyectos, carga anexos.</li>
+            <li><strong>Revisor:</strong> registra observaciones de revisión.</li>
+            <li><strong>Aprobador:</strong> cambia estado y archiva proyectos.</li>
+            <li><strong>Consulta:</strong> visualiza información.</li>
+        </ul>
+    </div>
+
+    <div class="card">
+        <h2>Rutas útiles</h2>
+        <ul>
+            <li><a class="btn-link" href="/">Inicio</a></li>
+            <li><a class="btn-link" href="/projects/">Listado de proyectos</a></li>
+            <li><a class="btn-link" href="/projects/new/">Nuevo proyecto</a></li>
+            <li><a class="btn-link" href="/projects/documents/">Consulta documental</a></li>
+            <li><a class="btn-link" href="/users/profile/">Mi perfil</a></li>
+        </ul>
+    </div>
+
+    <div class="card">
+        <h2>Consejos de uso</h2>
+        <ul>
+            <li>Diligencia ubicación urbana o rural, no ambas.</li>
+            <li>Adjunta soportes desde el detalle del proyecto.</li>
+            <li>Usa observaciones para revisión técnica, jurídica o financiera.</li>
+            <li>Usa cambio de estado para trazabilidad formal.</li>
+        </ul>
+    </div>
+{% endblock %}

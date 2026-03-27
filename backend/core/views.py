@@ -1,7 +1,7 @@
 from django.db.models import Count, Q
 from django.shortcuts import render
 
-from apps.projects.models import Project
+from apps.projects.models import Project, ProjectReview, ProjectAttachment
 
 
 def home(request):
@@ -27,6 +27,22 @@ def home(request):
         .order_by("-total", "sector")[:10]
     )
 
+    total_reviews = ProjectReview.objects.count()
+    total_attachments = ProjectAttachment.objects.count()
+
+    estados_chart = [
+        {"label": "Borrador", "value": proyectos_borrador},
+        {"label": "En revisión", "value": proyectos_revision},
+        {"label": "Aprobado", "value": proyectos_aprobados},
+        {"label": "Rechazado", "value": proyectos_rechazados},
+        {"label": "Archivado", "value": proyectos_archivados},
+    ]
+
+    territorial_chart = [
+        {"label": "Urbanos", "value": proyectos_urbanos},
+        {"label": "Rurales", "value": proyectos_rurales},
+    ]
+
     context = {
         "total_proyectos": total_proyectos,
         "proyectos_borrador": proyectos_borrador,
@@ -37,5 +53,9 @@ def home(request):
         "proyectos_urbanos": proyectos_urbanos,
         "proyectos_rurales": proyectos_rurales,
         "sectores": sectores,
+        "total_reviews": total_reviews,
+        "total_attachments": total_attachments,
+        "estados_chart": estados_chart,
+        "territorial_chart": territorial_chart,
     }
     return render(request, "home.html", context)
