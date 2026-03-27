@@ -71,18 +71,14 @@
 
             <p>
                 {{ form.comuna.label_tag }}<br>
-                {{ form.comuna }}<br>
+                {{ form.comuna.as_widget(attrs={'id': 'id_comuna'}) }}<br>
                 {{ form.comuna.errors }}
             </p>
 
             <p>
                 {{ form.barrio.label_tag }}<br>
-                {{ form.barrio }}<br>
+                {{ form.barrio.as_widget(attrs={'id': 'id_barrio'}) }}<br>
                 {{ form.barrio.errors }}
-            </p>
-
-            <p style="font-size: 0.9em; color: #555;">
-                Selecciona primero la comuna para habilitar correctamente los barrios asociados.
             </p>
         </fieldset>
 
@@ -91,22 +87,104 @@
 
             <p>
                 {{ form.corregimiento.label_tag }}<br>
-                {{ form.corregimiento }}<br>
+                {{ form.corregimiento.as_widget(attrs={'id': 'id_corregimiento'}) }}<br>
                 {{ form.corregimiento.errors }}
             </p>
 
             <p>
                 {{ form.vereda.label_tag }}<br>
-                {{ form.vereda }}<br>
+                {{ form.vereda.as_widget(attrs={'id': 'id_vereda'}) }}<br>
                 {{ form.vereda.errors }}
-            </p>
-
-            <p style="font-size: 0.9em; color: #555;">
-                Selecciona primero el corregimiento para habilitar correctamente las veredas asociadas.
             </p>
         </fieldset>
 
         <button type="submit">Guardar proyecto</button>
         <a class="btn-link" href="/projects/">Volver al listado</a>
     </form>
+
+    <script>
+        async function cargarOpciones(url, selectDestino, placeholder, selectedValue = "") {
+            selectDestino.innerHTML = "";
+            const defaultOption = document.createElement("option");
+            defaultOption.value = "";
+            defaultOption.textContent = placeholder;
+            selectDestino.appendChild(defaultOption);
+
+            if (!url) return;
+
+            try {
+                const response = await fetch(url);
+                const data = await response.json();
+
+                data.results.forEach(item => {
+                    const option = document.createElement("option");
+                    option.value = item.id;
+                    option.textContent = item.nombre;
+                    if (selectedValue && String(selectedValue) === String(item.id)) {
+                        option.selected = true;
+                    }
+                    selectDestino.appendChild(option);
+                });
+            } catch (error) {
+                console.error("Error cargando opciones:", error);
+            }
+        }
+
+        document.addEventListener("DOMContentLoaded", function () {
+            const comunaSelect = document.getElementById("id_comuna");
+            const barrioSelect = document.getElementById("id_barrio");
+            const corregimientoSelect = document.getElementById("id_corregimiento");
+            const veredaSelect = document.getElementById("id_vereda");
+
+            const barrioActual = barrioSelect.value;
+            const veredaActual = veredaSelect.value;
+
+            async function actualizarBarrios() {
+                const comunaId = comunaSelect.value;
+                if (comunaId) {
+                    await cargarOpciones(
+                        `/projects/ajax/barrios/?comuna_id=${comunaId}`,
+                        barrioSelect,
+                        "Seleccione un barrio",
+                        barrioActual
+                    );
+                } else {
+                    await cargarOpciones("", barrioSelect, "Seleccione un barrio");
+                }
+            }
+
+            async function actualizarVeredas() {
+                const corregimientoId = corregimientoSelect.value;
+                if (corregimientoId) {
+                    await cargarOpciones(
+                        `/projects/ajax/veredas/?corregimiento_id=${corregimientoId}`,
+                        veredaSelect,
+                        "Seleccione una vereda",
+                        veredaActual
+                    );
+                } else {
+                    await cargarOpciones("", veredaSelect, "Seleccione una vereda");
+                }
+            }
+
+            comunaSelect.addEventListener("change", function () {
+                cargarOpciones(
+                    comunaSelect.value ? `/projects/ajax/barrios/?comuna_id=${comunaSelect.value}` : "",
+                    barrioSelect,
+                    "Seleccione un barrio"
+                );
+            });
+
+            corregimientoSelect.addEventListener("change", function () {
+                cargarOpciones(
+                    corregimientoSelect.value ? `/projects/ajax/veredas/?corregimiento_id=${corregimientoSelect.value}` : "",
+                    veredaSelect,
+                    "Seleccione una vereda"
+                );
+            });
+
+            actualizarBarrios();
+            actualizarVeredas();
+        });
+    </script>
 {% endblock %}

@@ -3,9 +3,10 @@ from django.contrib.auth.decorators import login_required
 from django.db.models import Q
 from .responses import forbidden_response
 from django.shortcuts import get_object_or_404, redirect, render
+from django.http import JsonResponse
 
 from .forms import ProjectAttachmentForm, ProjectForm, ProjectReviewForm
-from .models import Comuna, Corregimiento, Project, ProjectStatusHistory
+from .models import Barrio, Comuna, Corregimiento, Project, ProjectStatusHistory, Vereda
 from .permissions import (
     can_change_project_status,
     can_create_project,
@@ -225,3 +226,28 @@ def project_review_create(request, project_id):
             messages.success(request, "Observación registrada correctamente.")
 
     return redirect("project_detail", project_id=project.id)
+
+@login_required
+def barrios_by_comuna(request):
+    comuna_id = request.GET.get("comuna_id")
+    data = []
+
+    if comuna_id:
+        barrios = Barrio.objects.filter(comuna_id=comuna_id).order_by("nombre")
+        data = [{"id": b.id, "nombre": b.nombre} for b in barrios]
+
+    return JsonResponse({"results": data})
+
+
+@login_required
+def veredas_by_corregimiento(request):
+    corregimiento_id = request.GET.get("corregimiento_id")
+    data = []
+
+    if corregimiento_id:
+        veredas = Vereda.objects.filter(corregimiento_id=corregimiento_id).order_by("nombre")
+        data = [{"id": v.id, "nombre": v.nombre} for v in veredas]
+
+    return JsonResponse({"results": data})
+
+    return JsonResponse({"results": data})
