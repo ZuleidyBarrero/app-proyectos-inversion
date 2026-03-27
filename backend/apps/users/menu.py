@@ -16,6 +16,7 @@ def build_menu_for_user(user):
             {"label": "Proyectos", "url": "/projects/"},
             {"label": "Nuevo proyecto", "url": "/projects/new/"},
             {"label": "Usuarios", "url": "/users/"},
+            {"label": "Perfil", "url": "/users/profile/"},
             {"label": "Admin", "url": "/admin/"},
             {"label": "Cerrar sesión", "url": "/users/logout/"},
         ])
@@ -26,8 +27,6 @@ def build_menu_for_user(user):
     if user_in_group(user, "Formulador"):
         menu.append({"label": "Nuevo proyecto", "url": "/projects/new/"})
 
-    if user_in_group(user, "Consulta") or user_in_group(user, "Revisor") or user_in_group(user, "Aprobador"):
-        pass
-
+    menu.append({"label": "Perfil", "url": "/users/profile/"})
     menu.append({"label": "Cerrar sesión", "url": "/users/logout/"})
     return menu

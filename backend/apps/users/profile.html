@@ -1,0 +1,37 @@
+{% extends "base/base.html" %}
+
+{% block title %}Mi perfil{% endblock %}
+
+{% block content %}
+    <h1>Mi perfil</h1>
+
+    <div class="card">
+        <p><strong>Usuario:</strong> {{ request.user.username }}</p>
+        <p><strong>Correo:</strong> {{ request.user.email|default:"No registrado" }}</p>
+        <p><strong>Superusuario:</strong> {% if request.user.is_superuser %}Sí{% else %}No{% endif %}</p>
+    </div>
+
+    <div class="card">
+        <h2>Grupos asignados</h2>
+        {% if grupos %}
+            <ul>
+                {% for group in grupos %}
+                    <li>{{ group.name }}</li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>Este usuario no tiene grupos asignados.</p>
+        {% endif %}
+    </div>
+
+    <div class="card">
+        <h2>Accesos principales</h2>
+        <ul>
+            <li><strong>Crear proyectos:</strong> {% if accesos.puede_crear %}Sí{% else %}No{% endif %}</li>
+            <li><strong>Registrar observaciones:</strong> {% if accesos.puede_revisar %}Sí{% else %}No{% endif %}</li>
+            <li><strong>Cambiar estado / archivar:</strong> {% if accesos.puede_aprobar %}Sí{% else %}No{% endif %}</li>
+            <li><strong>Consultar proyectos:</strong> {% if accesos.puede_consultar %}Sí{% else %}No{% endif %}</li>
+            <li><strong>Acceso total admin:</strong> {% if accesos.es_superusuario %}Sí{% else %}No{% endif %}</li>
+        </ul>
+    </div>
+{% endblock %}
