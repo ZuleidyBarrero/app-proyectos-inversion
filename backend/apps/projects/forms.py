@@ -50,6 +50,11 @@ class ProjectForm(forms.ModelForm):
         self.fields["barrio"].empty_label = "Seleccione un barrio"
         self.fields["corregimiento"].empty_label = "Seleccione un corregimiento"
         self.fields["vereda"].empty_label = "Seleccione una vereda"
+        self.fields["comuna"].widget.attrs.update({"id": "id_comuna"})
+        self.fields["barrio"].widget.attrs.update({"id": "id_barrio"})
+        self.fields["corregimiento"].widget.attrs.update({"id": "id_corregimiento"})
+        self.fields["vereda"].widget.attrs.update({"id": "id_vereda"})
+
 
         # Si viene POST, filtra barrios/veredas según lo seleccionado
         if "comuna" in self.data:
